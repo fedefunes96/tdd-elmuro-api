@@ -1,7 +1,6 @@
 require 'date'
 require 'rspec'
 require 'spec_helper'
-require_relative '../../app/model/health'
 require_relative '../../app/model/subject'
 require_relative '../../repositories/subject_repository'
 

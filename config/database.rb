@@ -1,6 +1,7 @@
 require 'sequel'
+require 'sinatra'
 
-DB = case ENV['RACK_ENV'].to_sym
+DB = case Sinatra::Application.environment # ENV['RACK_ENV'].to_sym
      when :development
        Sequel.connect('postgres://telegram:telegram@localhost/telegram_development')
      when :test
