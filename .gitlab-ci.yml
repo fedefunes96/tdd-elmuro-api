@@ -1,4 +1,4 @@
-image: ruby:2.3.0
+image: ruby:2.5.1
 services:
   - postgres:9.5
 stages:
