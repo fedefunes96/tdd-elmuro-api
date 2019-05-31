@@ -1,0 +1,15 @@
+development:
+  host: 'localhost'
+  adapter: 'postgresql'
+  encoding: utf-8
+  database: 'telegram_development'
+  username: 'telegram'
+  password: 'telegram'
+
+test:
+  host: 'localhost'
+  adapter: 'postgresql'
+  encoding: utf-8
+  database: 'telegram_test'
+  username: 'telegram'
+  password: 'telegram'
