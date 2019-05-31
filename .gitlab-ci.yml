@@ -1,6 +1,14 @@
 image: ruby:2.3.0
+services:
+  - postgres:9.5
 stages:
   - build
+
+variables:
+  POSTGRES_DB: telegram_test
+  POSTGRES_USER: telegram
+  POSTGRES_PASSWORD: telegram
+  DB_HOST: postgres
 
 job_build:
   stage: build
