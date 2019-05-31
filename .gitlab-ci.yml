@@ -14,5 +14,5 @@ job_build:
   stage: build
   script:
     - bundle install
-    - RACK_ENV=test bundle exec rake
+    - RACK_ENV=test rake
 
