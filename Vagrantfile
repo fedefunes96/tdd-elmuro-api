@@ -28,6 +28,6 @@ Vagrant.configure(2) do |config|
     rvm use 2.5.1
     rvm gemset create telegram
     rvm gemset use telegram
-    gem install bundler -v 2.0.1
+    gem install bundler -v '1.17.3'
   SHELL
 end
