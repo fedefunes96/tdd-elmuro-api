@@ -24,22 +24,18 @@ if %w[development test travis].include?(RACK_ENV)
   end
 
   namespace :db do
-    db_config = YAML.safe_load(File.open('config/database.yml'))
-
+    require_relative 'config/database'
     require 'sequel/core'
     task :migrate do
       Sequel.extension :migration
-      Sequel.connect(db_config[RACK_ENV]) do |db|
-        Sequel::Migrator.run(db, 'db/migrations')
-      end
+
+      Sequel::Migrator.run(DB, 'db/migrations')
     end
 
     task :reset do
       Sequel.extension :migration
-      Sequel.connect(db_config[RACK_ENV]) do |db|
-        Sequel::Migrator.run(db, 'db/migrations', target: 0)
-        Sequel::Migrator.run(db, 'db/migrations')
-      end
+      Sequel::Migrator.run(DB, 'db/migrations', target: 0)
+      Sequel::Migrator.run(DB, 'db/migrations')
     end
   end
 

@@ -1,5 +1,5 @@
 require_relative '../app/app'
-
+require_relative '../config/database'
 class BaseRepository
   def save(a_record)
     if !find_dataset(a_record).empty?
@@ -29,9 +29,7 @@ class BaseRepository
   protected
 
   def dataset
-    # rubocop:disable Style/GlobalVars
-    $DB[self.class.table_name]
-    # rubocop:enable Style/GlobalVars
+    DB[self.class.table_name]
   end
 
   def find_dataset(_row)
