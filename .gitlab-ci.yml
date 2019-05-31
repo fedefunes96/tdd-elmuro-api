@@ -3,6 +3,7 @@ services:
   - postgres:9.5
 stages:
   - build
+  - deploy_staging
 
 variables:
   POSTGRES_DB: telegram_test
@@ -16,3 +17,11 @@ job_build:
     - "gem install bundler"
     - "bundle install"
     - "RACK_ENV=test rake"
+
+job_deploy_staging:
+  stage: deploy_staging
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_STAGING_APP --api-key=$HEROKU_STAGING_API_KEY
+  only:
+    - master
