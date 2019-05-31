@@ -13,5 +13,6 @@ variables:
 job_build:
   stage: build
   script:
-    - ./build_all.sh
+    - bundle install
+    - RACK_ENV=test bundle exec rake
 
