@@ -14,7 +14,7 @@ variables:
 job_build:
   stage: build
   script:
-    - "gem install bundler"
+    - "gem install bundler -v '1.17.3'"
     - "bundle install"
     - "RACK_ENV=test rake"
 
