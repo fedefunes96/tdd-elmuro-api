@@ -11,4 +11,5 @@ end
 
 post '/reset' do
   SubjectRepository.new.delete_all
+  {respuesta: 'ok'}.to_json
 end

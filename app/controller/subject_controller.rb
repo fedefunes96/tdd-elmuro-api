@@ -1,3 +1,5 @@
+require_relative '../model/subject'
+
 class SubjectController
   NAME = 'nombre'.freeze
   CODE = 'codigo'.freeze
