@@ -6,7 +6,10 @@ require_relative '../repositories/subject_repository'
 post '/materias' do
   content_type :json
   status 201
-  SubjectController.new.create(request.body.read)
+  body = JSON.parse(request.body.read)
+  message, status_code = SubjectController.new.create(body)
+  status status_code
+  { resultado: message }.to_json
 end
 
 post '/reset' do

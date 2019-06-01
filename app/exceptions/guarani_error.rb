@@ -1,0 +1,2 @@
+class GuaraniError < RuntimeError
+end
