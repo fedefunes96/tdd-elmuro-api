@@ -56,6 +56,8 @@ class SubjectController
   end
 
   def map_setting_to_boolean(value)
+    return false if value.nil?
+
     {
       'si': true,
       'no': false

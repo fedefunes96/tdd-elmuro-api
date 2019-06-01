@@ -49,4 +49,11 @@ describe 'Alta materias' do
                                 modalidad: 'parciales', con_proyector: 'no', con_laboratorio: 'no')
     expect(last_response.status).to eq 400
   end
+
+  it 'assumes laboratory is not required when not specified' do
+    post_with_body('/materias', codigo: '9521', nombreMateria: 'memo2', docente: 'Nico Paez', cupo: 40,
+                                modalidad: 'parciales', con_proyector: 'si')
+    expect(last_response.status).to eq 201
+    expect(SubjectRepository.new.find_by_code('9521').laboratory).to eq false
+  end
 end

@@ -23,7 +23,10 @@ class SubjectRepository < BaseRepository
     {
       name: subject.name,
       code: subject.code,
-      max_students: subject.max_students
+      teacher: subject.teacher,
+      max_students: subject.max_students,
+      projector: subject.projector,
+      laboratory: subject.laboratory
     }
   end
 end
