@@ -10,13 +10,21 @@ describe 'Alta materias' do
   end
 
   it 'accepts a post to /materias' do
-    post '/materias'
+    post_with_body('/materias', {})
     expect(last_response.status).not_to eq 404
   end
 
   it 'creates a new subject' do
-    post('/materias', codigo: 9521, nombre: 'memo2', docente: 'Nico Paez',
-                      cupo: 'parciales', con_proyector: 'si', con_laboratorio: 'no')
+    post_with_body('/materias', codigo: '9521', nombre: 'memo2', docente: 'Nico Paez', cupo: 30,
+                                modalidad: 'parciales', con_proyector: 'si',
+                                con_laboratorio: 'no')
     expect(last_response.status).to eq 201
+  end
+
+  it 'new subject created is persisted on db' do
+    post_with_body('/materias', codigo: '9521', nombre: 'memo2', docente: 'Nico Paez', cupo: 30,
+                                modalidad: 'parciales', con_proyector: 'si',
+                                con_laboratorio: 'no')
+    expect(SubjectRepository.new.find_by_code('9521').name).to eq 'memo2'
   end
 end
