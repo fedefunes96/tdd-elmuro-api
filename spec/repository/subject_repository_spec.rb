@@ -7,15 +7,15 @@ require_relative '../../repositories/subject_repository'
 describe 'SubjectRepository' do
   let(:repo) { SubjectRepository.new }
   let(:subject1) do
-    subject1 = Subject.new('Tecnicas de diseño', '75.15', 30)
+    subject1 = Subject.new('Tecnicas de diseño', '75.15', 'NicoPaez', 30, true, false)
     subject1
   end
   let(:subject2) do
-    subject1 = Subject.new('Orga de compus', '66.20', 15)
+    subject1 = Subject.new('Orga de compus', '66.20', 'NicoPaez', 15, true, false)
     subject1
   end
   let(:subject3) do
-    subject1 = Subject.new('Tecnicas 2', '75.15', 10)
+    subject1 = Subject.new('Tecnicas 2', '75.15', 'NicoPaez', 10, true, false)
     subject1
   end
 

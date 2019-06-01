@@ -1,13 +1,16 @@
 require_relative '../exceptions/student_limit_error'
 
 class Subject
-  attr_accessor :name, :code, :max_students
+  attr_accessor :name, :code, :max_students, :teacher, :projector, :laboratory
 
-  def initialize(name, code, max_students)
+  def initialize(name, code, teacher, max_students, projector, laboratory)
     validate_max_students(max_students)
     @name = name
     @code = code
+    @teacher = teacher
     @max_students = max_students
+    @projector = projector
+    @laboratory = laboratory
   end
 
   private

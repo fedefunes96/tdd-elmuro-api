@@ -5,8 +5,10 @@ require_relative '../exceptions/student_limit_error'
 class SubjectController
   NAME = 'nombreMateria'.freeze
   CODE = 'codigo'.freeze
+  TEACHER = 'docente'.freeze
   MAX_STUDENTS = 'cupo'.freeze
-
+  PROJECTOR = 'con_proyector'.freeze
+  LABORATORY = 'con_laboratorio'.freeze
   def create(body)
     status_code = 400
     return 'parametro_faltante', 400 unless all_params?(body)
@@ -21,7 +23,8 @@ class SubjectController
 
   def create_subject(body)
     begin
-      subject = Subject.new(body[NAME], body[CODE], body[MAX_STUDENTS])
+      subject = Subject.new(body[NAME], body[CODE], body[TEACHER],
+                            body[MAX_STUDENTS], body[PROJECTOR], body[LABORATORY])
     rescue GuaraniError => e
       return error_msg(e)
     end
