@@ -1,6 +1,7 @@
 require_relative '../model/subject'
 require_relative '../exceptions/guarani_error'
 require_relative '../exceptions/student_limit_error'
+require_relative '../exceptions/invalid_subject_settings_error'
 
 class SubjectController
   NAME = 'nombreMateria'.freeze
@@ -40,7 +41,8 @@ class SubjectController
 
   def error_msg(error)
     messages = {
-      StudentLimitError => 'cupo_excedido'
+      StudentLimitError => 'cupo_excedido',
+      InvalidSubjectSettingsError => 'pedidos_incompatibles'
     }
 
     messages[error.class]
@@ -55,6 +57,6 @@ class SubjectController
     {
       'si': true,
       'no': false
-    }[value]
+    }[value.to_sym]
   end
 end

@@ -34,4 +34,11 @@ describe 'Alta materias' do
                                 con_laboratorio: 'no')
     expect(last_response.status).to eq 400
   end
+
+  it 'responds with error if subject has projector and laboratory at the same time' do
+    post_with_body('/materias', codigo: '9521', nombreMateria: 'memo2', docente: 'Nico Paez', cupo: 301,
+                                modalidad: 'parciales', con_proyector: 'si',
+                                con_laboratorio: 'si')
+    expect(last_response.status).to eq 400
+  end
 end

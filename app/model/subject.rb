@@ -5,8 +5,8 @@ class Subject
   attr_accessor :name, :code, :max_students, :teacher, :projector, :laboratory
 
   def initialize(name, code, teacher, max_students, projector, laboratory)
-    validate_max_students(max_students)
     validate_settings(projector, laboratory)
+    validate_max_students(max_students)
     @name = name
     @code = code
     @teacher = teacher
