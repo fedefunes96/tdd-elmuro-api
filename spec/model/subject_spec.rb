@@ -21,4 +21,10 @@ describe Subject do
       expect(subj.projector).to eq(false)
     end
   end
+
+  it 'can not have projector and laboratory at the same time' do
+    expect do
+      described_class.new('memo2', '9521', 'NicoPaez', 30, true, true)
+    end.to raise_error(InvalidSubjectSettingsError)
+  end
 end

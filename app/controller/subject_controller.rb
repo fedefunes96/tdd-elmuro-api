@@ -9,6 +9,7 @@ class SubjectController
   MAX_STUDENTS = 'cupo'.freeze
   PROJECTOR = 'con_proyector'.freeze
   LABORATORY = 'con_laboratorio'.freeze
+
   def create(body)
     status_code = 400
     return 'parametro_faltante', 400 unless all_params?(body)
@@ -22,6 +23,7 @@ class SubjectController
   private
 
   def create_subject(body)
+    parse_setting_fields(body)
     begin
       subject = Subject.new(body[NAME], body[CODE], body[TEACHER],
                             body[MAX_STUDENTS], body[PROJECTOR], body[LABORATORY])
@@ -42,5 +44,17 @@ class SubjectController
     }
 
     messages[error.class]
+  end
+
+  def parse_setting_fields(body)
+    body[PROJECTOR] = map_setting_to_boolean(body[PROJECTOR])
+    body[LABORATORY] = map_setting_to_boolean(body[LABORATORY])
+  end
+
+  def map_setting_to_boolean(value)
+    {
+      'si': true,
+      'no': false
+    }[value]
   end
 end
