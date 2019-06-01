@@ -41,4 +41,12 @@ describe 'Alta materias' do
                                 con_laboratorio: 'si')
     expect(last_response.status).to eq 400
   end
+
+  it 'responds with error if subject with that code already exists' do
+    post_with_body('/materias', codigo: '9521', nombreMateria: 'memo2', docente: 'Nico Paez', cupo: 40,
+                                modalidad: 'parciales', con_proyector: 'si', con_laboratorio: 'no')
+    post_with_body('/materias', codigo: '9521', nombreMateria: 'memo1', docente: 'Otro', cupo: 40,
+                                modalidad: 'parciales', con_proyector: 'no', con_laboratorio: 'no')
+    expect(last_response.status).to eq 400
+  end
 end

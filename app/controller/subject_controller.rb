@@ -15,6 +15,8 @@ class SubjectController
     status_code = 400
     return 'parametro_faltante', 400 unless all_params?(body)
 
+    return 'MATERIA_DUPLICADA', 400 if code_already_exists? body[CODE]
+
     message = create_subject(body)
     status_code = 201 if message.nil?
     message = 'materia_creada' if message.nil?
@@ -58,5 +60,9 @@ class SubjectController
       'si': true,
       'no': false
     }[value.to_sym]
+  end
+
+  def code_already_exists?(code)
+    !SubjectRepository.new.find_by_code(code).nil?
   end
 end
