@@ -1,13 +1,13 @@
 require_relative '../model/subject'
 
 class SubjectController
-  NAME = 'nombre'.freeze
+  NAME = 'nombreMateria'.freeze
   CODE = 'codigo'.freeze
   MAX_STUDENTS = 'cupo'.freeze
 
   def create(json_body)
     body = JSON.parse(json_body)
-    return { resultado: 'parametro_faltante' } unless all_params?(body)
+    return { resultado: 'parametro_faltante' }.to_json unless all_params?(body)
 
     subject = Subject.new(body[NAME], body[CODE], body[MAX_STUDENTS])
     SubjectRepository.new.save(subject)
