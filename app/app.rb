@@ -1,13 +1,9 @@
 require 'sinatra'
 require 'json'
-require_relative 'model/subject'
-require_relative '../repositories/subject_repository'
+require_relative 'controller/subject_controller'
 
 post '/materias' do
   content_type :json
   status 201
-  body = JSON.parse(request.body.read)
-  subject = Subject.new(body['nombre'], body['codigo'])
-  SubjectRepository.new.save(subject)
-  { resultado: 'materia_creada' }.to_json
+  SubjectController.new.create(request.body.read)
 end
