@@ -27,4 +27,11 @@ describe 'Alta materias' do
                                 con_laboratorio: 'no')
     expect(SubjectRepository.new.find_by_code('9521').name).to eq 'memo2'
   end
+
+  it 'responds with error if max students over limit' do
+    post_with_body('/materias', codigo: '9521', nombreMateria: 'memo2', docente: 'Nico Paez', cupo: 301,
+                                modalidad: 'parciales', con_proyector: 'si',
+                                con_laboratorio: 'no')
+    expect(last_response.status).to eq 400
+  end
 end
