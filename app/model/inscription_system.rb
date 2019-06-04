@@ -7,9 +7,10 @@ class InscriptionSystem
   end
 
   def create_inscription(student, subject)
-    raise InvalidInscription if inscripted_to?(student, subject)
+    raise InvalidInscription if inscripted_to?(student, subject) || !enough_slots?(subject)
 
     inscription = (Inscription.new student, subject)
+
     @inscriptions << inscription
     inscription
   end
@@ -19,5 +20,11 @@ class InscriptionSystem
       inscription.subject.code == subject.code &&
         inscription.student.username == student.username
     end
+  end
+
+  def enough_slots?(subject)
+    @inscriptions.count do |inscription|
+      inscription.subject.code == subject.code
+    end < subject.max_students
   end
 end

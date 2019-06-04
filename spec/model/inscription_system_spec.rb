@@ -7,6 +7,7 @@ require_relative '../../app/exceptions/invalid_inscription'
 describe InscriptionSystem do
   let(:student) { Student.new('Juan Perez', 'juanperez') }
   let(:subject1) { Subject.new('memo2', '9521', 'NicoPaez', 30, false, false) }
+  let(:subject2) { Subject.new('memo2', '9521', 'NicoPaez', 1, false, false) }
   let(:inscription_system) { described_class.new }
 
   it 'should create inscriptions' do
@@ -27,6 +28,16 @@ describe InscriptionSystem do
 
     expect do
       inscription_system.create_inscription(student, subject1)
+    end.to raise_error(InvalidInscription)
+  end
+
+  it 'should not let a student inscript to a subject without space available' do
+    other_student = Student.new('Ignacio Martin', 'ignaciomartin')
+
+    inscription_system.create_inscription(student, subject2)
+
+    expect do
+      inscription_system.create_inscription(other_student, subject2)
     end.to raise_error(InvalidInscription)
   end
 end
