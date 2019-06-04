@@ -1,4 +1,5 @@
 require_relative 'inscription'
+require_relative '../exceptions/invalid_inscription'
 
 class Student
   attr_accessor :name, :username, :inscriptions
@@ -10,6 +11,8 @@ class Student
   end
 
   def inscript(subject)
+    raise InvalidInscription if inscripted_in(subject)
+
     @inscriptions << (Inscription.new self, subject)
   end
 
