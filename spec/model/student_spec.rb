@@ -19,6 +19,6 @@ describe Student do
   it 'should inscript to a subject' do
     student.inscript(subject1)
 
-    expect(student.inscriptions.include?('9521')).to eq(true)
+    expect(student.inscripted_in(subject1)).to eq(true)
   end
 end
