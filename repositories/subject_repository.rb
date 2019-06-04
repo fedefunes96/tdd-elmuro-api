@@ -15,13 +15,18 @@ class SubjectRepository < BaseRepository
   end
 
   def load_subject(row)
-    Subject.new row[:name], row[:code]
+    Subject.new row[:name], row[:code], row[:teacher],
+                row[:max_students], row[:projector], row[:laboratory]
   end
 
   def changeset(subject)
     {
       name: subject.name,
-      code: subject.code
+      code: subject.code,
+      teacher: subject.teacher,
+      max_students: subject.max_students,
+      projector: subject.projector,
+      laboratory: subject.laboratory
     }
   end
 end
