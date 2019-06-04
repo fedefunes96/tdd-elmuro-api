@@ -1,7 +1,8 @@
 class Student
-  attr_accessor :name
+  attr_accessor :name, :username
 
-  def initialize(name)
+  def initialize(name, username)
     @name = name
+    @username = username
   end
 end
