@@ -11,16 +11,17 @@ class SubjectController
   PROJECTOR = 'proyector'.freeze
   LABORATORY = 'laboratorio'.freeze
 
+  SUCCESS_MESSAGE = 'materia_creada'.freeze
+  CODE_NOT_UNIQUE = 'MATERIA_DUPLICADA'.freeze
+  PARAMETER_MISSING = 'parametro_faltante'.freeze
+
   def create(body)
-    status_code = 400
-    return api_response('parametro_faltante'), 400 unless all_params?(body)
+    return api_response(PARAMETER_MISSING), 400 unless all_params?(body)
 
-    return api_response('MATERIA_DUPLICADA'), 400 if code_already_exists? body[CODE]
+    return api_response(CODE_NOT_UNIQUE), 400 if code_already_exists? body[CODE]
 
-    message = create_subject(body)
-    status_code = 201 if message.nil?
-    message = 'materia_creada' if message.nil?
-    [api_response(message), status_code]
+    message, status = create_subject(body)
+    [api_response(message), status]
   end
 
   private
@@ -32,10 +33,10 @@ class SubjectController
       subject = Subject.new(body[NAME], body[CODE], body[TEACHER],
                             body[MAX_STUDENTS], projector, laboratory)
     rescue GuaraniError => e
-      return error_msg(e)
+      return error_msg(e), 400
     end
     SubjectRepository.new.save(subject)
-    nil
+    [SUCCESS_MESSAGE, 201]
   end
 
   def all_params?(body)
