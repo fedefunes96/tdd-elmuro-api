@@ -8,28 +8,29 @@ class SubjectController
   CODE = 'codigo'.freeze
   TEACHER = 'docente'.freeze
   MAX_STUDENTS = 'cupo'.freeze
-  PROJECTOR = 'con_proyector'.freeze
-  LABORATORY = 'con_laboratorio'.freeze
+  PROJECTOR = 'proyector'.freeze
+  LABORATORY = 'laboratorio'.freeze
 
   def create(body)
     status_code = 400
-    return 'parametro_faltante', 400 unless all_params?(body)
+    return api_response('parametro_faltante'), 400 unless all_params?(body)
 
-    return 'MATERIA_DUPLICADA', 400 if code_already_exists? body[CODE]
+    return api_response('MATERIA_DUPLICADA'), 400 if code_already_exists? body[CODE]
 
     message = create_subject(body)
     status_code = 201 if message.nil?
     message = 'materia_creada' if message.nil?
-    [message, status_code]
+    [api_response(message), status_code]
   end
 
   private
 
   def create_subject(body)
-    parse_setting_fields(body)
     begin
+      projector = body[PROJECTOR] || false
+      laboratory = body[LABORATORY] || false
       subject = Subject.new(body[NAME], body[CODE], body[TEACHER],
-                            body[MAX_STUDENTS], body[PROJECTOR], body[LABORATORY])
+                            body[MAX_STUDENTS], projector, laboratory)
     rescue GuaraniError => e
       return error_msg(e)
     end
@@ -50,11 +51,6 @@ class SubjectController
     messages[error.class]
   end
 
-  def parse_setting_fields(body)
-    body[PROJECTOR] = map_setting_to_boolean(body[PROJECTOR])
-    body[LABORATORY] = map_setting_to_boolean(body[LABORATORY])
-  end
-
   def map_setting_to_boolean(value)
     return false if value.nil?
 
@@ -66,5 +62,9 @@ class SubjectController
 
   def code_already_exists?(code)
     !SubjectRepository.new.find_by_code(code).nil?
+  end
+
+  def api_response(message)
+    { error: message, resultado: message }
   end
 end

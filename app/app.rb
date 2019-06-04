@@ -9,7 +9,7 @@ post '/materias' do
   body = JSON.parse(request.body.read)
   message, status_code = SubjectController.new.create(body)
   status status_code
-  { resultado: message }.to_json
+  message.to_json
 end
 
 post '/reset' do
