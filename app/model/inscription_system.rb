@@ -7,6 +7,8 @@ class InscriptionSystem
   end
 
   def create_inscription(student, subject)
+    raise InvalidInscription if inscripted_to?(student, subject)
+
     inscription = (Inscription.new student, subject)
     @inscriptions << inscription
     inscription

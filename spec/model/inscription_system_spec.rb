@@ -21,4 +21,12 @@ describe InscriptionSystem do
 
     expect(inscription_system.inscripted_to?(student, subject1)).to eq(true)
   end
+
+  it 'should not let a student inscript twice to the same subject' do
+    inscription_system.create_inscription(student, subject1)
+
+    expect do
+      inscription_system.create_inscription(student, subject1)
+    end.to raise_error(InvalidInscription)
+  end
 end
