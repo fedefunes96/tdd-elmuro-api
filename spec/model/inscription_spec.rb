@@ -12,5 +12,9 @@ describe Inscription do
     it 'should respond to student' do
       expect(inscription.student.name).to eq('Juan Perez')
     end
+
+    it 'should respond to subject' do
+      expect(inscription.subject.name).to eq('memo2')
+    end
   end
 end
