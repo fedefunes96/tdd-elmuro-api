@@ -1,5 +1,6 @@
 require 'rspec'
 require_relative '../../app/exceptions/student_limit_error'
+require_relative '../../app/exceptions/invalid_max_students_error'
 
 describe Subject do
   it 'max students has to be at most 300' do
@@ -26,5 +27,11 @@ describe Subject do
     expect do
       described_class.new('memo2', '9521', 'NicoPaez', 30, true, true)
     end.to raise_error(InvalidSubjectSettingsError)
+  end
+
+  it 'can not have negative max students' do
+    expect do
+      described_class.new('memo2', '9521', 'NicoPaez', -30, false, false)
+    end.to raise_error(InvalidMaxStudentsError)
   end
 end

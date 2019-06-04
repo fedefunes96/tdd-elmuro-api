@@ -1,5 +1,6 @@
 require_relative '../exceptions/student_limit_error'
 require_relative '../exceptions/invalid_subject_settings_error'
+require_relative '../exceptions/invalid_max_students_error'
 
 class Subject
   MAX_STUDENTS_LIMIT = 300
@@ -19,6 +20,8 @@ class Subject
   private
 
   def validate_max_students(max_students)
+    raise InvalidMaxStudentsError if max_students.negative?
+
     raise StudentLimitError if max_students > MAX_STUDENTS_LIMIT
   end
 
