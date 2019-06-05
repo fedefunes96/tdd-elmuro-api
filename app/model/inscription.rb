@@ -5,4 +5,9 @@ class Inscription
     @student = student
     @subject = subject
   end
+
+  def ==(other)
+    @student.username == other.student.username &&
+      @subject.code == other.subject.code
+  end
 end
