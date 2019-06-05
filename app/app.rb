@@ -15,10 +15,12 @@ end
 
 post '/reset' do
   SubjectRepository.new.delete_all
+  InscriptionRepository.new.delete_all
+  StudentRepository.new.delete_all
   { respuesta: 'ok' }.to_json
 end
 
-post '/inscribir' do
+post '/alumnos' do
   content_type :json
   body = JSON.parse(request.body.read)
   message, status_code = InscriptionController.new.create(body)
