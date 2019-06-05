@@ -41,4 +41,12 @@ describe InscriptionSystem do
       inscription_system.create_inscription(other_student, subject2)
     end.to raise_error(NoAvailableQuotaError)
   end
+
+  it 'system should load inscriptions when created' do
+    inscription = inscription_system.create_inscription(student, subject2)
+
+    new_system = described_class.new([] << inscription)
+
+    expect(new_system.inscripted_to?(student, subject1)).to eq(true)
+  end
 end

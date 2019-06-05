@@ -3,8 +3,8 @@ require_relative '../exceptions/duplicate_inscription_error'
 require_relative '../exceptions/no_available_quota_error'
 
 class InscriptionSystem
-  def initialize
-    @inscriptions = []
+  def initialize(inscriptions = [])
+    @inscriptions = inscriptions
   end
 
   def create_inscription(student, subject)
@@ -29,4 +29,8 @@ class InscriptionSystem
       inscription.subject.code == subject.code
     end < subject.max_students
   end
+
+  protected
+
+  attr_accessor :inscriptions
 end
