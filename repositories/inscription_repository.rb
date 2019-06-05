@@ -17,12 +17,6 @@ class InscriptionRepository < BaseRepository
       inscriptions << (Inscription.new student, subject)
     end
 
-    # dataset.each do |row|
-    #   student = StudentRepository.new.find_by_username(row[:username])
-    #   subject = SubjectRepository.new.find_by_code(row[:subject_code])
-    #   inscriptions << (Inscription.new student, subject)
-    # end
-
     inscriptions
   end
 

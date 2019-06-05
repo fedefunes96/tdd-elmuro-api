@@ -33,17 +33,17 @@ class InscriptionController
   private
 
   def create_inscription(name, code, username)
+    subject = SubjectRepository.new.find_by_code(code)
+
+    return SUBJECT_MISSING, StatusCode::BAD_REQUEST if subject.nil?
+
+    student = retrieve_student(name, username)
+
+    inscriptions = InscriptionRepository.new.all_inscriptions
+
+    inscription_system = InscriptionSystem.new inscriptions
+
     begin
-      subject = SubjectRepository.new.find_by_code(code)
-
-      return SUBJECT_MISSING, StatusCode::BAD_REQUEST if subject.nil?
-
-      student = retrieve_student(name, username)
-
-      inscriptions = InscriptionRepository.new.all_inscriptions
-
-      inscription_system = InscriptionSystem.new inscriptions
-
       inscription = inscription_system.create_inscription(student, subject)
     rescue GuaraniError => e
       return ErrorHelper.new.message(e), StatusCode::BAD_REQUEST
