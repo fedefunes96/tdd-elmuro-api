@@ -16,3 +16,8 @@ post '/reset' do
   SubjectRepository.new.delete_all
   { respuesta: 'ok' }.to_json
 end
+
+post '/inscribir' do
+  content_type :json
+  status 201
+end
