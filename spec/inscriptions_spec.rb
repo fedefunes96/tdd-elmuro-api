@@ -35,4 +35,11 @@ describe 'Inscripcion alumnos' do
 
     expect(inscriptions.include?(Inscription.new(student, subject1))).to eq true
   end
+
+  it 'responds with error if subject does not exist' do
+    post_with_body('/inscribir', nombre_completo: 'Juan Perez',
+                                 username_alumno: 'juanperez', codigo_materia: '1000')
+
+    expect(last_response.status).to eq 400
+  end
 end
