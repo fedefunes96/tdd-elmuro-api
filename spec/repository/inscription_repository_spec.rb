@@ -30,4 +30,13 @@ describe 'InscriptionRepository' do
 
     expect(inscriptions.include?(inscription)).to eq(true)
   end
+
+  it 'deletes correctly' do
+    repo.save(inscription)
+    repo.delete(inscription)
+
+    inscriptions = repo.all_inscriptions
+
+    expect(inscriptions.include?(inscription)).to eq(false)
+  end
 end
