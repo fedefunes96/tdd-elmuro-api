@@ -4,32 +4,41 @@ require_relative '../exceptions/guarani_error'
 require_relative '../../repositories/subject_repository'
 require_relative '../../repositories/student_repository'
 require_relative '../../repositories/inscription_repository'
+require_relative '../helpers/parameter_helper'
+require_relative '../helpers/status_code'
+require_relative '../helpers/error_helper'
 
 class InscriptionController
-  NAME = 'nombre_completo'.freeze
-  USERNAME = 'username_alumno'.freeze
-  CODE = 'codigo_materia'.freeze
+  PARAMS = {
+    name: 'nombre_completo',
+    code: 'codigo_materia',
+    username: 'username_alumno'
+  }.freeze
 
   SUCCESS_MESSAGE = 'inscripcion_creada'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
   SUBJECT_MISSING = 'materia_faltante'.freeze
 
   def create(body)
-    return api_response(PARAMETER_MISSING), 400 unless all_params?(body)
+    unless ParameterHelper.new(PARAMS).all_params?(body)
+      return api_response(PARAMETER_MISSING), StatusCode::BAD_REQUEST
+    end
 
-    message, status = create_inscription(body)
+    message, status = create_inscription(body[PARAMS[:name]],
+                                         body[PARAMS[:code]],
+                                         body[PARAMS[:username]])
     [api_response(message), status]
   end
 
   private
 
-  def create_inscription(body)
+  def create_inscription(name, code, username)
     begin
-      subject = SubjectRepository.new.find_by_code(body[CODE])
+      subject = SubjectRepository.new.find_by_code(code)
 
-      return SUBJECT_MISSING, 400 if subject.nil?
+      return SUBJECT_MISSING, StatusCode::BAD_REQUEST if subject.nil?
 
-      student = retrieve_student(body)
+      student = retrieve_student(name, username)
 
       inscriptions = InscriptionRepository.new.all_inscriptions
 
@@ -37,31 +46,18 @@ class InscriptionController
 
       inscription = inscription_system.create_inscription(student, subject)
     rescue GuaraniError => e
-      return error_msg(e), 400
+      return ErrorHelper.new.message(e), StatusCode::BAD_REQUEST
     end
     InscriptionRepository.new.save(inscription)
-    [SUCCESS_MESSAGE, 201]
+    [SUCCESS_MESSAGE, StatusCode::CREATED]
   end
 
-  def retrieve_student(body)
-    student = Student.new body[NAME], body[USERNAME]
+  def retrieve_student(name, username)
+    student = Student.new name, username
 
     StudentRepository.new.save(student)
 
     student
-  end
-
-  def error_msg(error)
-    messages = {
-      NoAvailableQuotaError => 'CUPO_COMPLETO',
-      DuplicateInscriptionError => 'INSCRIPCION_DUPLICADA'
-    }
-
-    messages[error.class]
-  end
-
-  def all_params?(body)
-    body.include?(NAME) && body.include?(CODE) && body.include?(USERNAME)
   end
 
   def api_response(message)
