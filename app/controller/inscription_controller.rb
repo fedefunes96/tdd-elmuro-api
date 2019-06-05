@@ -24,7 +24,11 @@ class InscriptionController
 
       student = retrieve_student(body)
 
-      inscription = InscriptionSystem.new.create_inscription(student, subject)
+      inscriptions = InscriptionRepository.new.all_inscriptions
+
+      inscription_system = InscriptionSystem.new inscriptions
+
+      inscription = inscription_system.create_inscription(student, subject)
     rescue GuaraniError => e
       return error_msg(e), 400
     end

@@ -42,4 +42,12 @@ describe 'Inscripcion alumnos' do
 
     expect(last_response.status).to eq 400
   end
+
+  it 'responds with error if twice inscription' do
+    post_with_body('/inscribir', nombre_completo: 'Juan Perez',
+                                 username_alumno: 'juanperez', codigo_materia: '7592')
+    post_with_body('/inscribir', nombre_completo: 'Juan Perez',
+                                 username_alumno: 'juanperez', codigo_materia: '7592')
+    expect(last_response.status).to eq 400
+  end
 end
