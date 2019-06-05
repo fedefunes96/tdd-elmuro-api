@@ -42,7 +42,8 @@ class InscriptionController
 
   def error_msg(error)
     messages = {
-      InvalidInscription => 'inscripcion_invalida'
+      NoAvailableQuotaError => 'CUPO_COMPLETO',
+      DuplicateInscriptionError => 'INSCRIPCION_DUPLICADA'
     }
 
     messages[error.class]

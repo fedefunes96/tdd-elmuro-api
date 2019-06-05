@@ -1,5 +1,6 @@
 require_relative 'inscription'
-require_relative '../exceptions/invalid_inscription'
+require_relative '../exceptions/duplicate_inscription_error'
+require_relative '../exceptions/no_available_quota_error'
 
 class InscriptionSystem
   def initialize
@@ -7,7 +8,8 @@ class InscriptionSystem
   end
 
   def create_inscription(student, subject)
-    raise InvalidInscription if inscripted_to?(student, subject) || !enough_slots?(subject)
+    raise DuplicateInscriptionError if inscripted_to?(student, subject)
+    raise NoAvailableQuotaError unless enough_slots?(subject)
 
     inscription = (Inscription.new student, subject)
 

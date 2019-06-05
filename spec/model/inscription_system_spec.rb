@@ -2,7 +2,8 @@ require 'rspec'
 require_relative '../../app/model/student'
 require_relative '../../app/model/subject'
 require_relative '../../app/model/inscription_system'
-require_relative '../../app/exceptions/invalid_inscription'
+require_relative '../../app/exceptions/duplicate_inscription_error'
+require_relative '../../app/exceptions/no_available_quota_error'
 
 describe InscriptionSystem do
   let(:student) { Student.new('Juan Perez', 'juanperez') }
@@ -28,7 +29,7 @@ describe InscriptionSystem do
 
     expect do
       inscription_system.create_inscription(student, subject1)
-    end.to raise_error(InvalidInscription)
+    end.to raise_error(DuplicateInscriptionError)
   end
 
   it 'should not let a student inscript to a subject without space available' do
@@ -38,6 +39,6 @@ describe InscriptionSystem do
 
     expect do
       inscription_system.create_inscription(other_student, subject2)
-    end.to raise_error(InvalidInscription)
+    end.to raise_error(NoAvailableQuotaError)
   end
 end
