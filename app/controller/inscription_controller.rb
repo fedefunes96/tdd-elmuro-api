@@ -1,3 +1,10 @@
+require_relative '../model/student'
+require_relative '../model/inscription_system'
+require_relative '../exceptions/guarani_error'
+require_relative '../../repositories/subject_repository'
+require_relative '../../repositories/student_repository'
+require_relative '../../repositories/inscription_repository'
+
 class InscriptionController
   NAME = 'nombre_completo'.freeze
   USERNAME = 'username_alumno'.freeze
