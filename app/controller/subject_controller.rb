@@ -2,23 +2,33 @@ require_relative '../model/subject'
 require_relative '../exceptions/guarani_error'
 require_relative '../exceptions/student_limit_error'
 require_relative '../exceptions/invalid_subject_settings_error'
+require_relative '../helpers/parameter_helper'
+require_relative '../helpers/status_code'
+require_relative '../helpers/error_helper'
 
 class SubjectController
-  NAME = 'nombreMateria'.freeze
-  CODE = 'codigo'.freeze
-  TEACHER = 'docente'.freeze
-  MAX_STUDENTS = 'cupo'.freeze
+  PARAMS = {
+    name: 'nombreMateria',
+    code: 'codigo',
+    teacher: 'docente',
+    max_students: 'cupo'
+  }.freeze
+
   PROJECTOR = 'proyector'.freeze
   LABORATORY = 'laboratorio'.freeze
-
   SUCCESS_MESSAGE = 'materia_creada'.freeze
   CODE_NOT_UNIQUE = 'MATERIA_DUPLICADA'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
 
   def create(body)
-    return api_response(PARAMETER_MISSING), 400 unless all_params?(body)
+    unless ParameterHelper.new(PARAMS).all_params?(body)
+      return api_response(PARAMETER_MISSING), StatusCode::BAD_REQUEST
+    end
 
-    return api_response(CODE_NOT_UNIQUE), 400 if code_already_exists? body[CODE]
+    if code_already_exists? body[PARAMS[:code]]
+      return api_response(CODE_NOT_UNIQUE),
+      StatusCode::BAD_REQUEST
+    end
 
     message, status = create_subject(body)
     [api_response(message), status]
@@ -28,28 +38,20 @@ class SubjectController
 
   def create_subject(body)
     begin
-      projector = body[PROJECTOR] || false
-      laboratory = body[LABORATORY] || false
-      subject = Subject.new(body[NAME], body[CODE], body[TEACHER],
-                            body[MAX_STUDENTS], projector, laboratory)
+      subject = create_subject_from_body(body)
     rescue GuaraniError => e
-      return error_msg(e), 400
+      return ErrorHelper.new.message(e), StatusCode::BAD_REQUEST
     end
     SubjectRepository.new.save(subject)
-    [SUCCESS_MESSAGE, 201]
+    [SUCCESS_MESSAGE, StatusCode::CREATED]
   end
 
-  def all_params?(body)
-    body.include?(NAME) && body.include?(CODE) && body.include?(MAX_STUDENTS)
-  end
+  def create_subject_from_body(body)
+    projector = body[PROJECTOR] || false
+    laboratory = body[LABORATORY] || false
 
-  def error_msg(error)
-    messages = {
-      StudentLimitError => 'cupo_excedido',
-      InvalidSubjectSettingsError => 'pedidos_incompatibles'
-    }
-
-    messages[error.class]
+    Subject.new(body[PARAMS[:name]], body[PARAMS[:code]], body[PARAMS[:teacher]],
+                body[PARAMS[:max_students]], projector, laboratory)
   end
 
   def map_setting_to_boolean(value)
