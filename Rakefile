@@ -5,7 +5,7 @@ require 'yaml'
 
 RACK_ENV = ENV['RACK_ENV'] ||= ENV['RACK_ENV'] ||= 'test' unless defined?(RACK_ENV)
 
-if %w[development test travis].include?(RACK_ENV)
+if %w[development test travis staging].include?(RACK_ENV)
 
   task :all do
     ['rubocop', 'rake spec', 'rake cucumber'].each do |cmd|

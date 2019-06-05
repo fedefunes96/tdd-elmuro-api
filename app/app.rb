@@ -3,6 +3,12 @@ require 'json'
 require_relative 'controller/subject_controller'
 require_relative 'controller/inscription_controller'
 require_relative '../repositories/subject_repository'
+require_relative '../config/token'
+
+before do
+  token = request.get_header('HTTP_API_TOKEN')
+  halt 401 unless token == TOKEN
+end
 
 post '/materias' do
   content_type :json
