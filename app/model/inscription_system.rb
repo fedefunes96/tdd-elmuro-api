@@ -11,7 +11,7 @@ class InscriptionSystem
     raise DuplicateInscriptionError if inscripted_to?(student, subject)
     raise NoAvailableQuotaError unless enough_slots?(subject)
 
-    inscription = (Inscription.new student, subject)
+    inscription = Inscription.new(student, subject)
 
     @inscriptions << inscription
     inscription
