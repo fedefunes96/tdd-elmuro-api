@@ -35,5 +35,9 @@ describe Inscription do
     it 'grades can not be above 10' do
       expect { inscription.add_grades([11]) }.to raise_error(InvalidGradeError)
     end
+
+    it 'initially inscription is not graded' do
+      expect(inscription.graded?).to eq false
+    end
   end
 end

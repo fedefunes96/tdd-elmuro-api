@@ -29,4 +29,8 @@ class Inscription
 
     @grades.first >= PASSING_GRADE
   end
+
+  def graded?
+    !@grades.empty?
+  end
 end
