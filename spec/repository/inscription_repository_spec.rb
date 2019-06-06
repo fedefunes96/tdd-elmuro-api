@@ -47,4 +47,11 @@ describe 'InscriptionRepository' do
     same_inscription = repo.all_inscriptions.first
     expect(same_inscription.passing?).to eq true
   end
+
+  it 'can find by student username and subject code' do
+    repo.save(inscription)
+
+    new_inscription = repo.find_by_student_and_code(student1.username, subject1.code)
+    expect(inscription).to eq new_inscription
+  end
 end

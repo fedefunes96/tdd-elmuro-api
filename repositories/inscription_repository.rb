@@ -6,18 +6,12 @@ class InscriptionRepository < BaseRepository
   self.table_name = :inscriptions
 
   def all_inscriptions
-    inscriptions = []
+    find_inscriptions
+  end
 
-    StudentRepository.new.all.join(dataset, username: :username)
-                     .join(SubjectRepository.new.all, code: :subject_code)
-                     .each do |row|
-      student = retrieve_student(row)
-      subject = retrieve_subject(row)
-      grades = retrieve_grades(row)
-      inscriptions << (Inscription.new student, subject, grades)
-    end
-
-    inscriptions
+  def find_by_student_and_code(username, code)
+    find_inscriptions(dataset.where(username: username,
+                                    subject_code: code)).first
   end
 
   protected
@@ -36,6 +30,22 @@ class InscriptionRepository < BaseRepository
   end
 
   private
+
+  def find_inscriptions(data = nil)
+    data = dataset if data.nil?
+    inscriptions = []
+
+    StudentRepository.new.all.join(data, username: :username)
+                     .join(SubjectRepository.new.all, code: :subject_code)
+                     .each do |row|
+      student = retrieve_student(row)
+      subject = retrieve_subject(row)
+      grades = retrieve_grades(row)
+      inscriptions << (Inscription.new student, subject, grades)
+    end
+
+    inscriptions
+  end
 
   def retrieve_grades(row)
     if row[:grades].nil?
