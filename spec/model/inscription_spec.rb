@@ -39,5 +39,10 @@ describe Inscription do
     it 'initially inscription is not graded' do
       expect(inscription.graded?).to eq false
     end
+
+    it 'inscriptions once added a grade are considered graded' do
+      inscription.add_grades([3])
+      expect(inscription.graded?).to eq true
+    end
   end
 end
