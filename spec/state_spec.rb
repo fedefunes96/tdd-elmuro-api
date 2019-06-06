@@ -61,5 +61,14 @@ describe 'Estado alumno' do
       get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
       expect(JSON.parse(last_response.body)['estado']).to eq('aprobado')
     end
+
+    it 'responds ok if user is inscripted to the subject and disapproved' do
+      post_with_body('/calificar', codigo_materia: subject1.code,
+                                   notas: '2',
+                                   username_alumno: student1.username)
+
+      get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+      expect(JSON.parse(last_response.body)['estado']).to eq('desaprobado')
+    end
   end
 end
