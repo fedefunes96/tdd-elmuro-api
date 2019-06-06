@@ -5,6 +5,7 @@ class GradesController
   SUBJECT_CODE = 'codigo_materia'.freeze
   USERNAME = 'username_alumno'.freeze
   GRADES = 'notas'.freeze
+
   def initialize
     @inscription_repository = InscriptionRepository.new
   end
@@ -18,6 +19,7 @@ class GradesController
     grades = parse_grades(body[GRADES])
     inscription.add_grades(grades)
     @inscription_repository.save(inscription)
+    { resultado: 'notas_creadas' }
   end
 
   private
