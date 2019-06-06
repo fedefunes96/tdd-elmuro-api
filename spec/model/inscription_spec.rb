@@ -29,5 +29,10 @@ describe Inscription do
       inscription.grades.push(4)
       expect(inscription.passing?).to eq true
     end
+
+    it 'inscription is not passed if grade is 3' do
+      inscription.grades.push(3)
+      expect(inscription.passing?).to eq false
+    end
   end
 end
