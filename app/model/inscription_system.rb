@@ -19,8 +19,7 @@ class InscriptionSystem
 
   def inscripted_to?(student, subject)
     @inscriptions.any? do |inscription|
-      inscription.subject.code == subject.code &&
-        inscription.student.username == student.username
+      inscription_of?(inscription, student, subject)
     end
   end
 
@@ -30,7 +29,28 @@ class InscriptionSystem
     end < subject.max_students
   end
 
+  def add_grades(student, subject, grades)
+    inscription = @inscriptions.select do |ins|
+      inscription_of?(ins, student, subject)
+    end.first
+
+    inscription.add_grades(grades)
+  end
+
+  def graded?(student, subject)
+    @inscriptions.any? do |inscription|
+      inscription_of?(inscription, student, subject) && inscription.graded?
+    end
+  end
+
   protected
 
   attr_accessor :inscriptions
+
+  private
+
+  def inscription_of?(inscription, student, subject)
+    inscription.subject.code == subject.code &&
+      inscription.student.username == student.username
+  end
 end

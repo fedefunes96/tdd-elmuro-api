@@ -49,4 +49,12 @@ describe InscriptionSystem do
 
     expect(new_system.inscripted_to?(student, subject1)).to eq(true)
   end
+
+  it 'system should know if a student is graded in a subject' do
+    inscription_system.create_inscription(student, subject1)
+
+    inscription_system.add_grades(student, subject1, [4])
+
+    expect(inscription_system.graded?(student, subject1)).to eq(true)
+  end
 end
