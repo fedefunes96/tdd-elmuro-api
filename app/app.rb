@@ -2,6 +2,9 @@ require 'sinatra'
 require 'json'
 require_relative 'controller/subject_controller'
 require_relative 'controller/inscription_controller'
+require_relative 'controller/grades_controller'
+require_relative '../repositories/student_repository'
+require_relative '../repositories/inscription_repository'
 require_relative '../repositories/subject_repository'
 require_relative '../config/token'
 
@@ -30,6 +33,14 @@ post '/alumnos' do
   content_type :json
   body = JSON.parse(request.body.read)
   message, status_code = InscriptionController.new.create(body)
+  status status_code
+  message.to_json
+end
+
+post '/calificar' do
+  content_type :json
+  body = JSON.parse(request.body.read)
+  message, status_code = GradesController.new.grade(body)
   status status_code
   message.to_json
 end
