@@ -11,6 +11,7 @@ class GradesController
 
   SUCCESS_MESSAGE = 'notas_creadas'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
+  INVALID_CODE = 'codigo_invalido'.freeze
 
   def initialize
     @inscription_repository = InscriptionRepository.new
@@ -21,16 +22,22 @@ class GradesController
       return api_response(PARAMETER_MISSING, StatusCode::BAD_REQUEST)
     end
 
+    update_grades(body)
+  end
+
+  private
+
+  def update_grades(body)
     inscription = @inscription_repository
                   .find_by_student_and_code(body[PARAMS[:username]], body[PARAMS[:code]])
+
+    return api_response(INVALID_CODE, StatusCode::BAD_REQUEST) if inscription.nil?
 
     grades = parse_grades(body[PARAMS[:grades]])
     inscription.add_grades(grades)
     @inscription_repository.save(inscription)
     [{ resultado: SUCCESS_MESSAGE }, StatusCode::OK]
   end
-
-  private
 
   def parse_grades(grades)
     [Integer(grades)]

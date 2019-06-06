@@ -59,4 +59,12 @@ describe 'Grades endpoint' do
 
     expect(last_response.status).to eq 400
   end
+
+  it 'returns 400 if subject with that code does not exist' do
+    SubjectRepository.new.delete_all
+    post_with_body('/calificar', codigo_materia: '1001',
+                                 notas: '10',
+                                 username_alumno: 'juanperez')
+    expect(last_response.status).to eq 400
+  end
 end
