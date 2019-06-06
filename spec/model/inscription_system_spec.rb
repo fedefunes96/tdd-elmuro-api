@@ -57,4 +57,10 @@ describe InscriptionSystem do
 
     expect(inscription_system.graded?(student, subject1)).to eq(true)
   end
+
+  it 'system should know if a student is not graded in a subject' do
+    inscription_system.create_inscription(student, subject1)
+
+    expect(inscription_system.graded?(student, subject1)).to eq(false)
+  end
 end
