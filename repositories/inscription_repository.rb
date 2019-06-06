@@ -13,8 +13,8 @@ class InscriptionRepository < BaseRepository
                      .each do |row|
       student = retrieve_student(row)
       subject = retrieve_subject(row)
-
-      inscriptions << (Inscription.new student, subject)
+      grades = retrieve_grades(row)
+      inscriptions << (Inscription.new student, subject, grades)
     end
 
     inscriptions
@@ -30,11 +30,20 @@ class InscriptionRepository < BaseRepository
   def changeset(inscription)
     {
       username: inscription.student.username,
-      subject_code: inscription.subject.code
+      subject_code: inscription.subject.code,
+      grades: inscription.grades.to_s
     }
   end
 
   private
+
+  def retrieve_grades(row)
+    if row[:grades].nil?
+      []
+    else
+      JSON.parse(row[:grades])
+    end
+  end
 
   def retrieve_student(row)
     Student.new(row[:name], row[:username])

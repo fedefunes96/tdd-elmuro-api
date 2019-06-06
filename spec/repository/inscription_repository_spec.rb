@@ -39,4 +39,12 @@ describe 'InscriptionRepository' do
 
     expect(inscriptions.include?(inscription)).to eq(false)
   end
+
+  it 'persists grades' do
+    inscription.grades.push(10)
+    repo.save(inscription)
+
+    same_inscription = repo.all_inscriptions.first
+    expect(same_inscription.grades.first).to eq 10
+  end
 end
