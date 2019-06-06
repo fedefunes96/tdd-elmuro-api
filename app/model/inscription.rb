@@ -1,5 +1,7 @@
 class Inscription
   PASSING_GRADE = 4
+  MAX_GRADE = 10
+
   attr_accessor :student, :subject, :grades
 
   def initialize(student, subject, grades = nil)
@@ -18,6 +20,7 @@ class Inscription
   end
 
   def add_grades(grades)
+    grades.each { |x| raise InvalidGradeError if x > MAX_GRADE }
     @grades = grades
   end
 
