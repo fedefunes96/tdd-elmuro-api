@@ -47,4 +47,19 @@ describe 'Estado alumno' do
     expect(last_response.status).to eq 200
     expect(JSON.parse(last_response.body)['estado']).to eq('inscripto')
   end
+
+  context 'when Student graded in a subject' do
+    before(:each) do
+      InscriptionRepository.new.save(inscription)
+    end
+
+    it 'responds ok if user is inscripted to the subject and approved' do
+      post_with_body('/calificar', codigo_materia: subject1.code,
+                                   notas: '10',
+                                   username_alumno: student1.username)
+
+      get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+      expect(JSON.parse(last_response.body)['estado']).to eq('aprobado')
+    end
+  end
 end
