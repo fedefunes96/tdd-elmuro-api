@@ -6,14 +6,10 @@ class Inscription
 
   attr_accessor :student, :subject, :grades
 
-  def initialize(student, subject, grades = nil)
+  def initialize(student, subject, grades = [])
     @student = student
     @subject = subject
-    if grades.nil?
-      @grades = []
-    else
-      add_grades(grades)
-    end
+    @grades = grades
   end
 
   def ==(other)
