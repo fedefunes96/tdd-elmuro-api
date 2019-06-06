@@ -25,6 +25,7 @@ describe 'Grades endpoint' do
   end
 
   it 'accepts a post to grades endpoint' do
+    InscriptionRepository.new.save(inscription)
     post_with_body('/calificar', codigo_materia: '1001',
                                  notas: '[4,6,8,1]',
                                  username_alumno: 'juanperez')
@@ -48,5 +49,14 @@ describe 'Grades endpoint' do
                                  username_alumno: 'juanperez')
 
     expect(InscriptionRepository.new.all_inscriptions.first.passing?).to eq true
+  end
+
+  it 'returns 400 if code missing' do
+    InscriptionRepository.new.save(inscription)
+    post_with_body('/calificar',
+                   notas: '10',
+                   username_alumno: 'juanperez')
+
+    expect(last_response.status).to eq 400
   end
 end
