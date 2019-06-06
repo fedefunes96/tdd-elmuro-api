@@ -20,5 +20,9 @@ describe Inscription do
     it 'should have a list of grades, initially empty' do
       expect(inscription.grades.empty?).to eq true
     end
+
+    it 'inscription is not passed if grades are empty' do
+      expect(inscription.passing?).to eq false
+    end
   end
 end

@@ -11,4 +11,8 @@ class Inscription
     @student.username == other.student.username &&
       @subject.code == other.subject.code
   end
+
+  def passing?
+    false
+  end
 end
