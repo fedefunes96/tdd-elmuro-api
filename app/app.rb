@@ -44,3 +44,7 @@ post '/calificar' do
   status status_code
   message.to_json
 end
+
+get '/estado' do
+  content_type :json
+end
