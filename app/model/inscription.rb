@@ -6,10 +6,10 @@ class Inscription
 
   attr_accessor :student, :subject, :grades
 
-  def initialize(student, subject, grades = [])
+  def initialize(student, subject)
     @student = student
     @subject = subject
-    @grades = grades
+    @grades = []
   end
 
   def ==(other)

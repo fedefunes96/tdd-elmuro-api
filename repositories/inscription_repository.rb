@@ -38,13 +38,20 @@ class InscriptionRepository < BaseRepository
     StudentRepository.new.all.join(data, username: :username)
                      .join(SubjectRepository.new.all, code: :subject_code)
                      .each do |row|
-      student = retrieve_student(row)
-      subject = retrieve_subject(row)
-      grades = retrieve_grades(row)
-      inscriptions << (Inscription.new student, subject, grades)
+      inscription = init_inscription(row)
+      inscriptions << inscription
     end
 
     inscriptions
+  end
+
+  def init_inscription(row)
+    student = retrieve_student(row)
+    subject = retrieve_subject(row)
+    grades = retrieve_grades(row)
+    inscription = Inscription.new student, subject
+    inscription.add_grades(grades)
+    inscription
   end
 
   def retrieve_grades(row)
