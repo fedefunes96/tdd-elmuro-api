@@ -67,4 +67,12 @@ describe 'Grades endpoint' do
                                  username_alumno: 'juanperez')
     expect(last_response.status).to eq 400
   end
+
+  it 'returns 400 if username does not exist' do
+    StudentRepository.new.delete_all
+    post_with_body('/calificar', codigo_materia: '1001',
+                                 notas: '10',
+                                 username_alumno: 'juanperez')
+    expect(last_response.status).to eq 400
+  end
 end
