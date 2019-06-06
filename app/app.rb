@@ -40,7 +40,7 @@ end
 post '/calificar' do
   content_type :json
   body = JSON.parse(request.body.read)
-  message = GradesController.new.grade(body)
-  status 200
+  message, status_code = GradesController.new.grade(body)
+  status status_code
   message.to_json
 end

@@ -1,4 +1,5 @@
 require 'json'
+require_relative '../helpers/status_code'
 require_relative '../../repositories/inscription_repository'
 
 class GradesController
@@ -6,6 +7,7 @@ class GradesController
   USERNAME = 'username_alumno'.freeze
   GRADES = 'notas'.freeze
 
+  SUCCESS_MESSAGE = 'notas_creadas'.freeze
   def initialize
     @inscription_repository = InscriptionRepository.new
   end
@@ -19,7 +21,7 @@ class GradesController
     grades = parse_grades(body[GRADES])
     inscription.add_grades(grades)
     @inscription_repository.save(inscription)
-    { resultado: 'notas_creadas' }
+    [{ resultado: SUCCESS_MESSAGE }, StatusCode::OK]
   end
 
   private
