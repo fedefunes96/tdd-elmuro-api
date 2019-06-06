@@ -16,6 +16,7 @@ class StateController
 
   NOT_INSCRIPTED = 'no_inscripto'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
+  SUBJECT_NOT_EXISTS = 'materia_inexistente'.freeze
 
   def state(params)
     unless ParameterHelper.new(PARAMS).all_params?(params)
@@ -35,12 +36,15 @@ class StateController
 
   def retrieve_state(username, code)
     subject = SubjectRepository.new.find_by_code(code)
+
+    return [SUBJECT_NOT_EXISTS, StatusCode::BAD_REQUEST] if subject.nil?
+
     student = StudentRepository.new.find_by_username(username)
     inscriptions = InscriptionRepository.new.all_inscriptions
 
     inscription_system = InscriptionSystem.new inscriptions
 
-    return [NOT_INSCRIPTED, 200] if not_inscripted?(student, subject, inscription_system)
+    return [NOT_INSCRIPTED, StatusCode::OK] if not_inscripted?(student, subject, inscription_system)
   end
 
   def not_inscripted?(student, subject, inscription_system)
