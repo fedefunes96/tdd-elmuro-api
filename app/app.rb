@@ -33,3 +33,7 @@ post '/alumnos' do
   status status_code
   message.to_json
 end
+
+post '/calificar' do
+  {}.to_json
+end
