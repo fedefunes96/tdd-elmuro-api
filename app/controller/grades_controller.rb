@@ -12,7 +12,7 @@ class GradesController
   SUCCESS_MESSAGE = 'notas_creadas'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
   INVALID_CODE = 'codigo_invalido'.freeze
-  GRADE_ERROR = 'nota_invalida'.freeze
+  GRADE_ERROR = 'NOTA_INVALIDA'.freeze
 
   def initialize
     @inscription_repository = InscriptionRepository.new
