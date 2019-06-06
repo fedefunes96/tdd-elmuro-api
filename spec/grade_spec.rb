@@ -10,7 +10,10 @@ describe 'Grades endpoint' do
   end
 
   it 'accepts a post to grades endpoint' do
-    post_with_body('/calificar', {})
+    post_with_body('/calificar', codigo_materia: '1001',
+                                 notas: '[4,6,8,1]',
+                                 username_alumno: 'juanperez')
+
     expect(last_response.status).not_to eq 404
   end
 end
