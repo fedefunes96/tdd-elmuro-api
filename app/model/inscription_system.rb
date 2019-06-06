@@ -43,6 +43,12 @@ class InscriptionSystem
     end
   end
 
+  def passing?(student, subject)
+    @inscriptions.any? do |inscription|
+      inscription_of?(inscription, student, subject) && inscription.passing?
+    end
+  end
+
   protected
 
   attr_accessor :inscriptions

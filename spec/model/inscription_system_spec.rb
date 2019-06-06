@@ -63,4 +63,20 @@ describe InscriptionSystem do
 
     expect(inscription_system.graded?(student, subject1)).to eq(false)
   end
+
+  it 'system should know if a student approved a subject' do
+    inscription_system.create_inscription(student, subject1)
+
+    inscription_system.add_grades(student, subject1, [4])
+
+    expect(inscription_system.passing?(student, subject1)).to eq(true)
+  end
+
+  it 'system should know if a student disapproved a subject' do
+    inscription_system.create_inscription(student, subject1)
+
+    inscription_system.add_grades(student, subject1, [2])
+
+    expect(inscription_system.passing?(student, subject1)).to eq(false)
+  end
 end
