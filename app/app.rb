@@ -10,7 +10,8 @@ require_relative '../config/token'
 
 before do
   token = request.get_header('HTTP_API_TOKEN')
-  halt 401 unless token == TOKEN
+  path = request.path
+  halt 401 if token != TOKEN && path != '/reset'
 end
 
 post '/materias' do
