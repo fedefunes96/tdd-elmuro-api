@@ -16,5 +16,9 @@ describe Inscription do
     it 'should respond to subject' do
       expect(inscription.subject.name).to eq('memo2')
     end
+
+    it 'should have a list of grades, initially empty' do
+      expect(inscription.grades.empty?).to eq true
+    end
   end
 end
