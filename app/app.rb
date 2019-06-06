@@ -2,6 +2,9 @@ require 'sinatra'
 require 'json'
 require_relative 'controller/subject_controller'
 require_relative 'controller/inscription_controller'
+require_relative 'controller/grades_controller'
+require_relative '../repositories/student_repository'
+require_relative '../repositories/inscription_repository'
 require_relative '../repositories/subject_repository'
 require_relative '../config/token'
 
@@ -35,5 +38,9 @@ post '/alumnos' do
 end
 
 post '/calificar' do
+  content_type :json
+  body = JSON.parse(request.body.read)
+  GradesController.new.grade(body)
+  status 200
   {}.to_json
 end

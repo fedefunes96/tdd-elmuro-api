@@ -1,4 +1,3 @@
-require_relative '../app/app'
 require_relative '../config/database'
 class BaseRepository
   def save(a_record)

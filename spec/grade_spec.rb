@@ -5,6 +5,21 @@ require_relative '../app/app'
 describe 'Grades endpoint' do
   include Rack::Test::Methods
 
+  let(:student1) do
+    student = Student.new('Juan Perez', 'juanperez')
+    StudentRepository.new.save(student)
+    student
+  end
+  let(:subject1) do
+    subject1 = Subject.new('Orga de compus', '1001', 'NicoPaez', 15, true, false)
+    SubjectRepository.new.save(subject1)
+    subject1
+  end
+  let(:inscription) do
+    inscription = Inscription.new(student1, subject1)
+    inscription
+  end
+
   def app
     Sinatra::Application
   end
@@ -15,5 +30,14 @@ describe 'Grades endpoint' do
                                  username_alumno: 'juanperez')
 
     expect(last_response.status).not_to eq 404
+  end
+
+  it 'updates an existing inscription with grades' do
+    InscriptionRepository.new.save(inscription)
+    post_with_body('/calificar', codigo_materia: '1001',
+                                 notas: '[10]',
+                                 username_alumno: 'juanperez')
+
+    expect(InscriptionRepository.new.all_inscriptions.first.passing?).to eq true
   end
 end
