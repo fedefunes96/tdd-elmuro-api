@@ -40,4 +40,13 @@ describe 'Grades endpoint' do
 
     expect(InscriptionRepository.new.all_inscriptions.first.passing?).to eq true
   end
+
+  it 'accepts a single number as a grade' do
+    InscriptionRepository.new.save(inscription)
+    post_with_body('/calificar', codigo_materia: '1001',
+                                 notas: '10',
+                                 username_alumno: 'juanperez')
+
+    expect(InscriptionRepository.new.all_inscriptions.first.passing?).to eq true
+  end
 end

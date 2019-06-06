@@ -15,7 +15,16 @@ class GradesController
 
     return nil if inscription.nil?
 
-    inscription.add_grades(JSON.parse(body[GRADES]))
+    grades = parse_grades(body[GRADES])
+    inscription.add_grades(grades)
     @inscription_repository.save(inscription)
+  end
+
+  private
+
+  def parse_grades(grades)
+    [Integer(grades)]
+  rescue ArgumentError
+    JSON.parse(grades)
   end
 end
