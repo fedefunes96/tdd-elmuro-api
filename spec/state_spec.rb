@@ -32,10 +32,19 @@ describe 'Estado alumno' do
   it 'responds with user not inscripted if user is not inscripted' do
     get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
     expect(last_response.status).to eq 200
+    expect(JSON.parse(last_response.body)['estado']).to eq('no_inscripto')
   end
 
   it 'responds error if subject does not exists' do
     get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: '3000')
     expect(last_response.status).to eq 400
+    expect(JSON.parse(last_response.body)['estado']).to eq('materia_inexistente')
+  end
+
+  it 'responds ok if user is inscripted to the subject' do
+    InscriptionRepository.new.save(inscription)
+    get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+    expect(last_response.status).to eq 200
+    expect(JSON.parse(last_response.body)['estado']).to eq('inscripto')
   end
 end

@@ -17,6 +17,7 @@ class StateController
   NOT_INSCRIPTED = 'no_inscripto'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
   SUBJECT_NOT_EXISTS = 'materia_inexistente'.freeze
+  INSCRIPTED = 'inscripto'.freeze
 
   def state(params)
     unless ParameterHelper.new(PARAMS).all_params?(params)
@@ -45,6 +46,8 @@ class StateController
     inscription_system = InscriptionSystem.new inscriptions
 
     return [NOT_INSCRIPTED, StatusCode::OK] if not_inscripted?(student, subject, inscription_system)
+
+    [INSCRIPTED, StatusCode::OK]
   end
 
   def not_inscripted?(student, subject, inscription_system)
