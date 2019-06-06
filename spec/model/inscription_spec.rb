@@ -44,5 +44,9 @@ describe Inscription do
       inscription.add_grades([3])
       expect(inscription.graded?).to eq true
     end
+
+    it 'grades can not be negative' do
+      expect { inscription.add_grades([-1]) }.to raise_error(InvalidGradeError)
+    end
   end
 end

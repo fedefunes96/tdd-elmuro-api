@@ -7,11 +7,11 @@ class Inscription
   def initialize(student, subject, grades = nil)
     @student = student
     @subject = subject
-    @grades = if grades.nil?
-                []
-              else
-                grades
-              end
+    if grades.nil?
+      @grades = []
+    else
+      add_grades(grades)
+    end
   end
 
   def ==(other)
@@ -20,7 +20,7 @@ class Inscription
   end
 
   def add_grades(grades)
-    grades.each { |x| raise InvalidGradeError if x > MAX_GRADE }
+    grades.each { |x| raise InvalidGradeError if x > MAX_GRADE || x.negative? }
     @grades = grades
   end
 
