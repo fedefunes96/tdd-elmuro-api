@@ -41,10 +41,10 @@ describe 'InscriptionRepository' do
   end
 
   it 'persists grades' do
-    inscription.grades.push(10)
+    inscription.add_grades([10])
     repo.save(inscription)
 
     same_inscription = repo.all_inscriptions.first
-    expect(same_inscription.grades.first).to eq 10
+    expect(same_inscription.passing?).to eq true
   end
 end

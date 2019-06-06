@@ -17,6 +17,10 @@ class Inscription
       @subject.code == other.subject.code
   end
 
+  def add_grades(grades)
+    @grades = grades
+  end
+
   def passing?
     return false if @grades.empty?
 

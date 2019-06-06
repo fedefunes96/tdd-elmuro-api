@@ -17,21 +17,17 @@ describe Inscription do
       expect(inscription.subject.name).to eq('memo2')
     end
 
-    it 'should have a list of grades, initially empty' do
-      expect(inscription.grades.empty?).to eq true
-    end
-
     it 'inscription is not passed if grades are empty' do
       expect(inscription.passing?).to eq false
     end
 
     it 'inscription is passed if a grade above 4 exists' do
-      inscription.grades.push(4)
+      inscription.add_grades([4])
       expect(inscription.passing?).to eq true
     end
 
     it 'inscription is not passed if grade is 3' do
-      inscription.grades.push(3)
+      inscription.add_grades([3])
       expect(inscription.passing?).to eq false
     end
   end
