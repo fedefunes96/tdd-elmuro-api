@@ -75,4 +75,11 @@ describe 'Grades endpoint' do
                                  username_alumno: 'juanperez')
     expect(last_response.status).to eq 400
   end
+
+  it 'returns 400 if an invalid grade is passed' do
+    post_with_body('/calificar', codigo_materia: '1001',
+                                 notas: '-10',
+                                 username_alumno: 'juanperez')
+    expect(last_response.status).to eq 400
+  end
 end

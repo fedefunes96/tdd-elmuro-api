@@ -1,3 +1,5 @@
+require_relative '../../app/exceptions/invalid_grade_error'
+
 class Inscription
   PASSING_GRADE = 4
   MAX_GRADE = 10
