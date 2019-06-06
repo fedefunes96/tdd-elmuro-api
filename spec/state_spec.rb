@@ -13,4 +13,9 @@ describe 'Estado alumno' do
     get_with_body('/estado', {})
     expect(last_response.status).not_to eq 404
   end
+
+  it 'responds with user not inscripted if user is not inscripted' do
+    get_with_body('/estado', usernameAlumno: 'juanperez', codigoMateria: '9952')
+    expect(last_response.status).to eq 200
+  end
 end

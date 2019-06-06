@@ -3,6 +3,7 @@ require 'json'
 require_relative 'controller/subject_controller'
 require_relative 'controller/inscription_controller'
 require_relative 'controller/grades_controller'
+require_relative 'controller/state_controller'
 require_relative '../repositories/student_repository'
 require_relative '../repositories/inscription_repository'
 require_relative '../repositories/subject_repository'
@@ -46,5 +47,7 @@ post '/calificar' do
 end
 
 get '/estado' do
-  content_type :json
+  message, status_code = StateController.new.state(params)
+  status status_code
+  message.to_json
 end
