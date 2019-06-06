@@ -1,10 +1,15 @@
 class Inscription
+  PASSING_GRADE = 4
   attr_accessor :student, :subject, :grades
 
   def initialize(student, subject, grades = nil)
     @student = student
     @subject = subject
-    @grades = grades || []
+    @grades = if grades.nil?
+                []
+              else
+                grades
+              end
   end
 
   def ==(other)
@@ -13,6 +18,8 @@ class Inscription
   end
 
   def passing?
-    false
+    return false if @grades.empty?
+
+    @grades.first >= PASSING_GRADE
   end
 end

@@ -24,5 +24,10 @@ describe Inscription do
     it 'inscription is not passed if grades are empty' do
       expect(inscription.passing?).to eq false
     end
+
+    it 'inscription is passed if a grade above 4 exists' do
+      inscription.grades.push(4)
+      expect(inscription.passing?).to eq true
+    end
   end
 end
