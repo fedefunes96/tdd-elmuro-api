@@ -40,5 +40,11 @@ describe 'Alta materias' do
       subjects = JSON.parse(last_response.body)['oferta']
       expect(subjects.first['nombre']).to eq subject1.name
     end
+
+    it 'subject should have a teacher' do
+      get_with_token('/materias', username: 'juanperez')
+      subjects = JSON.parse(last_response.body)['oferta']
+      expect(subjects.first['docente']).to eq subject1.teacher
+    end
   end
 end

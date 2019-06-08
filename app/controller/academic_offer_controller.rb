@@ -26,7 +26,8 @@ class AcademicOfferController
   def subject_to_hash(subject)
     {
       codigo: subject.code,
-      nombre: subject.name
+      nombre: subject.name,
+      docente: subject.teacher
     }
   end
 end
