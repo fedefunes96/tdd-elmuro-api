@@ -34,5 +34,11 @@ describe 'Alta materias' do
       subjects = JSON.parse(last_response.body)['oferta']
       expect(subjects.first['codigo']).to eq subject1.code
     end
+
+    it 'subject should have a name' do
+      get_with_token('/materias', username: 'juanperez')
+      subjects = JSON.parse(last_response.body)['oferta']
+      expect(subjects.first['nombre']).to eq subject1.name
+    end
   end
 end

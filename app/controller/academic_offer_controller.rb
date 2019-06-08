@@ -1,3 +1,9 @@
+require_relative '../../repositories/subject_repository'
+require_relative '../../repositories/inscription_repository'
+require_relative '../../repositories/student_repository'
+require_relative '../../app/model/academic_offer'
+require_relative '../../app/model/inscription_system'
+
 class AcademicOfferController
   USERNAME = 'username'.freeze
 
@@ -19,7 +25,8 @@ class AcademicOfferController
 
   def subject_to_hash(subject)
     {
-      codigo: subject.code
+      codigo: subject.code,
+      nombre: subject.name
     }
   end
 end
