@@ -18,7 +18,7 @@ class Inscription
   end
 
   def add_grades(grades)
-    grades.each { |x| raise InvalidGradeError if x > MAX_GRADE || x.negative? }
+    grades.each { |x| raise InvalidGradeError if not_valid_grade? x }
     @grades = grades
   end
 
@@ -30,5 +30,11 @@ class Inscription
 
   def graded?
     !@grades.empty?
+  end
+
+  private
+
+  def not_valid_grade?(grade)
+    !(grade.is_a? Numeric) || grade > MAX_GRADE || grade.negative?
   end
 end
