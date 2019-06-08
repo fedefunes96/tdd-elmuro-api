@@ -50,6 +50,13 @@ describe 'Alta materias' do
     end
   end
 
+  it 'subjects already passed should not show up in offer' do
+    inscription.add_grades([10])
+    InscriptionRepository.new.save(inscription)
+    subjects = response_offer
+    expect(subjects.include?(subject1)).to eq false
+  end
+
   def response_offer
     get_with_token('/materias', username: 'juanperez')
     JSON.parse(last_response.body)['oferta']
