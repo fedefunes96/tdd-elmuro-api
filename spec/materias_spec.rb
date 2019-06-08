@@ -56,4 +56,10 @@ describe 'Alta materias' do
     expect(last_response.status).to eq 201
     expect(SubjectRepository.new.find_by_code('9521').laboratory).to eq false
   end
+
+  it 'responds with error if subject has code longer than 4 characters' do
+    post_with_body('/materias', codigo: '10000', nombreMateria: 'memo2', docente: 'Nico Paez', cupo: 40,
+                                modalidad: 'parciales', proyector: true)
+    expect(last_response.status).to eq 400
+  end
 end
