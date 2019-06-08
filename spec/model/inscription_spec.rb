@@ -48,5 +48,9 @@ describe Inscription do
     it 'grades can not be negative' do
       expect { inscription.add_grades([-1]) }.to raise_error(InvalidGradeError)
     end
+
+    it 'should raise error when grades are not numeric' do
+      expect { inscription.add_grades(['a string']) }.to raise_error(InvalidGradeError)
+    end
   end
 end
