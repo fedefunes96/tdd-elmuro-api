@@ -3,6 +3,7 @@ require 'json'
 require_relative 'controller/subject_controller'
 require_relative 'controller/inscription_controller'
 require_relative 'controller/grades_controller'
+require_relative 'controller/academic_offer_controller'
 require_relative '../repositories/student_repository'
 require_relative '../repositories/inscription_repository'
 require_relative '../repositories/subject_repository'
@@ -48,5 +49,6 @@ end
 
 get '/materias' do
   status 200
-  { oferta: [] }.to_json
+  response = AcademicOfferController.new.handle(request.params)
+  response.to_json
 end
