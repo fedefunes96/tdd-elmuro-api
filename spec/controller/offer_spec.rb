@@ -46,5 +46,11 @@ describe 'Alta materias' do
       subjects = JSON.parse(last_response.body)['oferta']
       expect(subjects.first['docente']).to eq subject1.teacher
     end
+
+    it 'subject should have a quota number' do
+      get_with_token('/materias', username: 'juanperez')
+      subjects = JSON.parse(last_response.body)['oferta']
+      expect(subjects.first['cupo']).to eq subject1.max_students
+    end
   end
 end

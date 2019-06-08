@@ -27,7 +27,8 @@ class AcademicOfferController
     {
       codigo: subject.code,
       nombre: subject.name,
-      docente: subject.teacher
+      docente: subject.teacher,
+      cupo: subject.max_students
     }
   end
 end
