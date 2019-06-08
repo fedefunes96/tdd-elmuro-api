@@ -45,3 +45,8 @@ post '/calificar' do
   status status_code
   message.to_json
 end
+
+get '/materias' do
+  status 200
+  {}.to_json
+end

@@ -11,3 +11,8 @@ def post_with_body(uri, body)
   header 'Api-Token', TOKEN
   post(uri, body.to_json, CONTENT_TYPE: 'application/json')
 end
+
+def get_with_token(uri)
+  header 'Api-Token', TOKEN
+  get(uri)
+end
