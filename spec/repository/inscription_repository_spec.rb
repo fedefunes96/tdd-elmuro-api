@@ -14,7 +14,7 @@ describe 'InscriptionRepository' do
     student
   end
   let(:subject1) do
-    subject1 = Subject.new('Orga de compus', '66.20', 'NicoPaez', 15, true, false)
+    subject1 = Subject.new('Orga de compus', '6620', 'NicoPaez', 15, true, false)
     SubjectRepository.new.save(subject1)
     subject1
   end
