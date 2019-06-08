@@ -82,4 +82,11 @@ describe 'Grades endpoint' do
                                  username_alumno: 'juanperez')
     expect(last_response.status).to eq 400
   end
+
+  it 'returns 400 if grade is not numeric' do
+    post_with_body('/calificar', codigo_materia: '1001',
+                                 notas: 'string',
+                                 username_alumno: 'juanperez')
+    expect(last_response.status).to eq 400
+  end
 end
