@@ -13,4 +13,9 @@ describe Student do
       expect(student.username).to eq('juanperez')
     end
   end
+
+  it 'students with the same username should be equal' do
+    other = described_class.new('Juan Perez', 'juanperez')
+    expect(student == other).to eq true
+  end
 end
