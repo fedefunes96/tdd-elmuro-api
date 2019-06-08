@@ -55,7 +55,13 @@ describe 'Alta materias' do
     inscription.add_grades([10])
     InscriptionRepository.new.save(inscription)
     subjects = response_offer
-    expect(subjects.include?(subject1)).to eq false
+    expect(subjects.empty?).to eq true
+  end
+
+  it 'two subjects should show up in the offer if both exist' do
+    SubjectRepository.new.save(Subject.new('Tecnicas 1', '7510', 'Emilio', 10, true, false))
+    subjects = response_offer
+    expect(subjects.size).to eq 2
   end
 
   def response_offer
