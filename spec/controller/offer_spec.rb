@@ -11,7 +11,12 @@ describe 'Alta materias' do
   end
 
   it 'should respond with status code different than 404' do
-    get_with_token('/materias')
+    get_with_token('/materias', username: 'juanperez')
     expect(last_response.status).not_to eq 404
+  end
+
+  it 'should respond with a subject list' do
+    get_with_token('/materias', username: 'juanperez')
+    expect(JSON.parse(last_response.body)['oferta'].class).to eq Array
   end
 end

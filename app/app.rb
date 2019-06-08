@@ -48,5 +48,5 @@ end
 
 get '/materias' do
   status 200
-  {}.to_json
+  { oferta: [] }.to_json
 end
