@@ -49,4 +49,10 @@ describe InscriptionSystem do
 
     expect(new_system.inscripted_to?(student, subject1)).to eq(true)
   end
+
+  it '30 slots subject remaining slots after one inscription should be 29' do
+    inscription_system.create_inscription(student, subject1)
+
+    expect(inscription_system.remaining_slots(subject1)).to eq 29
+  end
 end

@@ -25,12 +25,22 @@ class InscriptionSystem
   end
 
   def enough_slots?(subject)
-    @inscriptions.count do |inscription|
-      inscription.subject.code == subject.code
-    end < subject.max_students
+    occupied_slots(subject) < subject.max_students
+  end
+
+  def remaining_slots(subject)
+    subject.max_students - occupied_slots(subject)
   end
 
   protected
 
   attr_accessor :inscriptions
+
+  private
+
+  def occupied_slots(subject)
+    @inscriptions.count do |inscription|
+      inscription.subject.code == subject.code
+    end
+  end
 end
