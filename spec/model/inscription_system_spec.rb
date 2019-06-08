@@ -55,4 +55,10 @@ describe InscriptionSystem do
 
     expect(inscription_system.remaining_slots(subject1)).to eq 29
   end
+
+  it 'should say if a student has passed a subject' do
+    inscription = inscription_system.create_inscription(student, subject1)
+    inscription.add_grades([10])
+    expect(inscription_system.passed_subject?(student, subject1)).to eq true
+  end
 end

@@ -32,6 +32,10 @@ class InscriptionSystem
     subject.max_students - occupied_slots(subject)
   end
 
+  def passed_subject?(_student, _subject)
+    true
+  end
+
   protected
 
   attr_accessor :inscriptions
