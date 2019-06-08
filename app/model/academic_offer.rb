@@ -4,7 +4,7 @@ class AcademicOffer
     @inscription_system = inscription_system
   end
 
-  def offer_for(_student)
-    @subjects
+  def offer_for(student)
+    @subjects.reject { |subject| @inscription_system.passed_subject?(student, subject) }
   end
 end

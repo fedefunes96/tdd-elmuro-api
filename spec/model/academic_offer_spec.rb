@@ -24,4 +24,11 @@ describe AcademicOffer do
     offer = academic_offer.offer_for(student)
     expect(offer.include?(subject1)).to eq true
   end
+
+  it 'if a student has passed a subject, it does not show up on the offer' do
+    inscription = inscription_system.create_inscription(student, subject1)
+    inscription.add_grades([10])
+    offer = academic_offer.offer_for(student)
+    expect(offer.include?(subject1)).to eq false
+  end
 end
