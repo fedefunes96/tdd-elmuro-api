@@ -4,24 +4,29 @@ require_relative '../exceptions/invalid_max_students_error'
 
 class Subject
   MAX_STUDENTS_LIMIT = 300
+  MAX_CODE_LENGTH = 4
   attr_accessor :name, :code, :max_students, :teacher, :projector, :laboratory
 
   def initialize(name, code, teacher, max_students, projector, laboratory)
-    validate_settings(projector, laboratory)
-    validate_max_students(max_students)
+    validate_params!(code, laboratory, max_students, projector)
     @name = name
     @code = code
     @teacher = teacher
     @max_students = max_students
     @projector = projector
     @laboratory = laboratory
-    validate_code
   end
 
   private
 
-  def validate_code
-    raise InvalidSubjectCodeError if @code.length > 4
+  def validate_params!(code, laboratory, max_students, projector)
+    validate_settings(projector, laboratory)
+    validate_max_students(max_students)
+    validate_code(code)
+  end
+
+  def validate_code(code)
+    raise InvalidSubjectCodeError if code.length > MAX_CODE_LENGTH
   end
 
   def validate_max_students(max_students)
