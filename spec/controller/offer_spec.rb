@@ -19,4 +19,20 @@ describe 'Alta materias' do
     get_with_token('/materias', username: 'juanperez')
     expect(JSON.parse(last_response.body)['oferta'].class).to eq Array
   end
+
+  describe 'subject responses' do
+    let(:student) { Student.new('Juan Perez', 'juanperez') }
+    let(:subject1) { Subject.new('Tecnicas 2', '7592', 'NicoPaez', 10, true, false) }
+
+    before(:each) do
+      SubjectRepository.new.save(subject1)
+      InscriptionRepository.new.save(Inscription.new(student, subject1))
+    end
+
+    it 'subject should have a code' do
+      get_with_token('/materias', username: 'juanperez')
+      subjects = JSON.parse(last_response.body)['oferta']
+      expect(subjects.first['codigo']).to eq subject1.code
+    end
+  end
 end
