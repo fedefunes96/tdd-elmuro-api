@@ -61,4 +61,8 @@ describe InscriptionSystem do
     inscription.add_grades([10])
     expect(inscription_system.passed_subject?(student, subject1)).to eq true
   end
+
+  it 'passed_subject should be false if student has not passed a subject' do
+    expect(inscription_system.passed_subject?(student, subject1)).to eq false
+  end
 end

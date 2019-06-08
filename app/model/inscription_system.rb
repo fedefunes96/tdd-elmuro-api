@@ -32,8 +32,8 @@ class InscriptionSystem
     subject.max_students - occupied_slots(subject)
   end
 
-  def passed_subject?(_student, _subject)
-    true
+  def passed_subject?(_student, subject)
+    @inscriptions.select { |x| x.subject == subject && x.passing? }.any?
   end
 
   protected
