@@ -8,6 +8,10 @@ class SubjectRepository < BaseRepository
     load_subject(row) unless row.nil?
   end
 
+  def all_subjects
+    all.map(&method(:load_subject))
+  end
+
   protected
 
   def find_dataset(subject)
