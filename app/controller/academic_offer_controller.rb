@@ -28,7 +28,7 @@ class AcademicOfferController
       codigo: subject.code,
       nombre: subject.name,
       docente: subject.teacher,
-      cupo: subject.max_students
+      cupo: @inscription_system.remaining_slots(subject)
     }
   end
 end

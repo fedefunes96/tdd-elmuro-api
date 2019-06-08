@@ -10,6 +10,7 @@ describe 'Alta materias' do
   let(:inscription) { Inscription.new(student, subject1) }
 
   before(:each) do
+    StudentRepository.new.save(student)
     SubjectRepository.new.save(subject1)
     InscriptionRepository.new.save(inscription)
   end
@@ -46,7 +47,7 @@ describe 'Alta materias' do
 
     it 'subject should have a quota number' do
       subjects = response_offer
-      expect(subjects.first['cupo']).to eq subject1.max_students
+      expect(subjects.first['cupo']).to eq subject1.max_students - 1
     end
   end
 
