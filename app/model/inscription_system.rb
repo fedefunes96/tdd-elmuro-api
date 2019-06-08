@@ -20,7 +20,7 @@ class InscriptionSystem
   def inscripted_to?(student, subject)
     @inscriptions.any? do |inscription|
       inscription.subject == subject &&
-        inscription.student.username == student.username
+        inscription.student == student
     end
   end
 

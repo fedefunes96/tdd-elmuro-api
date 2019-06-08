@@ -9,7 +9,7 @@ class Student
     @inscriptions = []
   end
 
-  def ==(_other)
-    true
+  def ==(other)
+    @username == other.username
   end
 end

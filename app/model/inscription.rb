@@ -13,7 +13,7 @@ class Inscription
   end
 
   def ==(other)
-    @student.username == other.student.username &&
+    @student == other.student &&
       @subject == other.subject
   end
 
