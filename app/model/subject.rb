@@ -15,9 +15,14 @@ class Subject
     @max_students = max_students
     @projector = projector
     @laboratory = laboratory
+    validate_code
   end
 
   private
+
+  def validate_code
+    raise InvalidSubjectCodeError if @code.length > 4
+  end
 
   def validate_max_students(max_students)
     raise InvalidMaxStudentsError if max_students.negative?
