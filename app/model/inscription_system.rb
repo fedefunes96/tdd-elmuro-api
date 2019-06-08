@@ -19,7 +19,7 @@ class InscriptionSystem
 
   def inscripted_to?(student, subject)
     @inscriptions.any? do |inscription|
-      inscription.subject.code == subject.code &&
+      inscription.subject == subject &&
         inscription.student.username == student.username
     end
   end
@@ -40,7 +40,7 @@ class InscriptionSystem
 
   def occupied_slots(subject)
     @inscriptions.count do |inscription|
-      inscription.subject.code == subject.code
+      inscription.subject == subject
     end
   end
 end

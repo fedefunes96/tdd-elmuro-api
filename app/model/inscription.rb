@@ -14,7 +14,7 @@ class Inscription
 
   def ==(other)
     @student.username == other.student.username &&
-      @subject.code == other.subject.code
+      @subject == other.subject
   end
 
   def add_grades(grades)
