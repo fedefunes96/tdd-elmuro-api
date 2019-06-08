@@ -55,4 +55,10 @@ describe Subject do
     other = described_class.new('memo2', '9521', 'NicoPaez', 30, false, false)
     expect(one_subject == other).to eq true
   end
+
+  it 'subject is not equal to another if they have different code' do
+    one_subject = described_class.new('memo2', '9521', 'NicoPaez', 30, false, false)
+    other = described_class.new('memo2', '5221', 'NicoPaez', 30, false, false)
+    expect(one_subject == other).to eq false
+  end
 end

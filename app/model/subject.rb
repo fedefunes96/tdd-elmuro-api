@@ -19,8 +19,8 @@ class Subject
     @laboratory = laboratory
   end
 
-  def ==(_other)
-    true
+  def ==(other)
+    @code == other.code
   end
 
   private
