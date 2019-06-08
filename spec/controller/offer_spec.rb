@@ -5,6 +5,14 @@ require_relative '../spec_helper'
 
 describe 'Alta materias' do
   include Rack::Test::Methods
+  let(:student) { Student.new('Juan Perez', 'juanperez') }
+  let(:subject1) { Subject.new('Tecnicas 2', '7592', 'NicoPaez', 10, true, false) }
+  let(:inscription) { Inscription.new(student, subject1) }
+
+  before(:each) do
+    SubjectRepository.new.save(subject1)
+    InscriptionRepository.new.save(inscription)
+  end
 
   def app
     Sinatra::Application
@@ -21,36 +29,29 @@ describe 'Alta materias' do
   end
 
   describe 'subject responses' do
-    let(:student) { Student.new('Juan Perez', 'juanperez') }
-    let(:subject1) { Subject.new('Tecnicas 2', '7592', 'NicoPaez', 10, true, false) }
-
-    before(:each) do
-      SubjectRepository.new.save(subject1)
-      InscriptionRepository.new.save(Inscription.new(student, subject1))
-    end
-
     it 'subject should have a code' do
-      get_with_token('/materias', username: 'juanperez')
-      subjects = JSON.parse(last_response.body)['oferta']
+      subjects = response_offer
       expect(subjects.first['codigo']).to eq subject1.code
     end
 
     it 'subject should have a name' do
-      get_with_token('/materias', username: 'juanperez')
-      subjects = JSON.parse(last_response.body)['oferta']
+      subjects = response_offer
       expect(subjects.first['nombre']).to eq subject1.name
     end
 
     it 'subject should have a teacher' do
-      get_with_token('/materias', username: 'juanperez')
-      subjects = JSON.parse(last_response.body)['oferta']
+      subjects = response_offer
       expect(subjects.first['docente']).to eq subject1.teacher
     end
 
     it 'subject should have a quota number' do
-      get_with_token('/materias', username: 'juanperez')
-      subjects = JSON.parse(last_response.body)['oferta']
+      subjects = response_offer
       expect(subjects.first['cupo']).to eq subject1.max_students
     end
+  end
+
+  def response_offer
+    get_with_token('/materias', username: 'juanperez')
+    JSON.parse(last_response.body)['oferta']
   end
 end
