@@ -1,6 +1,6 @@
 require 'rspec'
 require 'rack/test'
-require_relative '../app/app'
+require_relative '../../app/app'
 
 describe 'Grades endpoint' do
   include Rack::Test::Methods

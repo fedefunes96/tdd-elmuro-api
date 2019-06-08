@@ -1,6 +1,6 @@
 require 'rspec'
 require 'rack/test'
-require_relative '../app/app'
+require_relative '../../app/app'
 
 describe 'Inscripcion alumnos' do
   include Rack::Test::Methods
