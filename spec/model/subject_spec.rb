@@ -49,4 +49,10 @@ describe Subject do
       described_class.new(LONG_NAME, '9521', 'NicoPaez', 30, false, false)
     end.to raise_error(InvalidSubjectNameError)
   end
+
+  it 'subject is equal to another if they share the same code' do
+    one_subject = described_class.new('memo2', '9521', 'NicoPaez', 30, false, false)
+    other = described_class.new('memo2', '9521', 'NicoPaez', 30, false, false)
+    expect(one_subject == other).to eq true
+  end
 end
