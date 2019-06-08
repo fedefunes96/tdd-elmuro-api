@@ -62,4 +62,12 @@ describe 'Alta materias' do
                                 modalidad: 'parciales', proyector: true)
     expect(last_response.status).to eq 400
   end
+
+  it 'responds with NOMBRE_ERRONEO if subject name is longer than 50 characters' do
+    LONG_NAME = '012345678901234567890123456789012345678901234567890123456789'.freeze
+    post_with_body('/materias', codigo: '9521', nombreMateria: LONG_NAME, docente: 'Nico Paez', cupo: 40,
+                                modalidad: 'parciales', proyector: true)
+    expect(last_response.status).to eq 400
+    expect(last_response.body).to include('NOMBRE_ERRONEO')
+  end
 end

@@ -2,6 +2,7 @@ require 'rspec'
 require_relative '../../app/exceptions/student_limit_error'
 require_relative '../../app/exceptions/invalid_max_students_error'
 require_relative '../../app/exceptions/invalid_subject_code_error'
+require_relative '../../app/exceptions/invalid_subject_name_error'
 
 describe Subject do
   it 'max students has to be at most 300' do
@@ -40,5 +41,12 @@ describe Subject do
     expect do
       described_class.new('memo2', '10000', 'NicoPaez', 30, false, false)
     end.to raise_error(InvalidSubjectCodeError)
+  end
+
+  it 'should raise error when subject name is longer than 50 characters' do
+    expect do
+      LONG_NAME = '012345678901234567890123456789012345678901234567890123456789'.freeze
+      described_class.new(LONG_NAME, '9521', 'NicoPaez', 30, false, false)
+    end.to raise_error(InvalidSubjectNameError)
   end
 end
