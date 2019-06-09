@@ -11,7 +11,7 @@ describe 'Grades endpoint' do
     student
   end
   let(:subject1) do
-    subject1 = Subject.new('Orga de compus', '1001', 'NicoPaez', 15, true, false)
+    subject1 = Subject.new('Orga de compus', '1001', 'NicoPaez', 15, true, false, :finals)
     SubjectRepository.new.save(subject1)
     subject1
   end

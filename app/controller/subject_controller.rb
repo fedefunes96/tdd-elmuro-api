@@ -11,7 +11,8 @@ class SubjectController
     name: 'nombreMateria',
     code: 'codigo',
     teacher: 'docente',
-    max_students: 'cupo'
+    max_students: 'cupo',
+    type: 'modalidad'
   }.freeze
 
   PROJECTOR = 'proyector'.freeze
@@ -51,7 +52,7 @@ class SubjectController
     laboratory = body[LABORATORY] || false
 
     Subject.new(body[PARAMS[:name]], body[PARAMS[:code]], body[PARAMS[:teacher]],
-                body[PARAMS[:max_students]], projector, laboratory)
+                body[PARAMS[:max_students]], projector, laboratory, body[PARAMS[:type]])
   end
 
   def map_setting_to_boolean(value)

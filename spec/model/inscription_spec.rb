@@ -6,7 +6,7 @@ require_relative '../../app/exceptions/invalid_grade_error'
 
 describe Inscription do
   let(:student) { Student.new('Juan Perez', 'juanperez') }
-  let(:subject1) { Subject.new('memo2', '9521', 'NicoPaez', 30, false, false) }
+  let(:subject1) { Subject.new('memo2', '9521', 'NicoPaez', 30, false, false, :finals) }
   let(:inscription) { described_class.new(student, subject1) }
 
   describe 'attributes' do

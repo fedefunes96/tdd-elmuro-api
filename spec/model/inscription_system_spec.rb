@@ -7,8 +7,8 @@ require_relative '../../app/exceptions/no_available_quota_error'
 
 describe InscriptionSystem do
   let(:student) { Student.new('Juan Perez', 'juanperez') }
-  let(:subject1) { Subject.new('memo2', '9521', 'NicoPaez', 30, false, false) }
-  let(:subject2) { Subject.new('memo2', '9521', 'NicoPaez', 1, false, false) }
+  let(:subject1) { Subject.new('memo2', '9521', 'NicoPaez', 30, false, false, :finals) }
+  let(:subject2) { Subject.new('memo2', '9521', 'NicoPaez', 1, false, false, :finals) }
   let(:inscription_system) { described_class.new }
 
   it 'should create inscriptions' do
