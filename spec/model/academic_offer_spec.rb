@@ -31,4 +31,9 @@ describe AcademicOffer do
     offer = academic_offer.offer_for(student)
     expect(offer.include?(subject1)).to eq false
   end
+
+  it 'all_subjects returns the entire offer' do
+    expect(academic_offer.all_subjects.include?(subject1)).to eq true
+    expect(academic_offer.all_subjects.include?(subject2)).to eq true
+  end
 end
