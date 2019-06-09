@@ -64,6 +64,12 @@ describe 'Alta materias' do
     expect(subjects.size).to eq 2
   end
 
+  it 'if student is not in database it returns all subjects' do
+    get_with_token('/materias', usernameAlumno: 'alumno_no_registrado')
+    subjects = JSON.parse(last_response.body)['oferta']
+    expect(subjects.size).to eq 1
+  end
+
   def response_offer
     get_with_token('/materias', usernameAlumno: 'juanperez')
     JSON.parse(last_response.body)['oferta']

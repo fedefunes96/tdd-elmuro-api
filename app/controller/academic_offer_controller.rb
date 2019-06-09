@@ -17,7 +17,11 @@ class AcademicOfferController
 
   def handle(params)
     student = @student_repository.find_by_username(params[USERNAME])
-    offer = @academic_offer.offer_for(student)
+    offer = if student.nil?
+              @academic_offer.all_subjects
+            else
+              @academic_offer.offer_for(student)
+            end
     { oferta: offer.map(&method(:subject_to_hash)) }
   end
 

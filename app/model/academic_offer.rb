@@ -7,4 +7,8 @@ class AcademicOffer
   def offer_for(student)
     @subjects.reject { |subject| @inscription_system.passed_subject?(student, subject) }
   end
+
+  def all_subjects
+    @subjects.clone
+  end
 end
