@@ -19,18 +19,32 @@ class InscriptionSystem
 
   def inscripted_to?(student, subject)
     @inscriptions.any? do |inscription|
-      inscription.subject.code == subject.code &&
-        inscription.student.username == student.username
+      inscription.subject == subject &&
+        inscription.student == student
     end
   end
 
   def enough_slots?(subject)
-    @inscriptions.count do |inscription|
-      inscription.subject.code == subject.code
-    end < subject.max_students
+    occupied_slots(subject) < subject.max_students
+  end
+
+  def remaining_slots(subject)
+    subject.max_students - occupied_slots(subject)
+  end
+
+  def passed_subject?(student, subject)
+    @inscriptions.select { |x| x.student == student && x.subject == subject && x.passing? }.any?
   end
 
   protected
 
   attr_accessor :inscriptions
+
+  private
+
+  def occupied_slots(subject)
+    @inscriptions.count do |inscription|
+      inscription.subject == subject
+    end
+  end
 end

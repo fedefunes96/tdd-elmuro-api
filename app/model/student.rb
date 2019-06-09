@@ -8,4 +8,8 @@ class Student
     @username = username
     @inscriptions = []
   end
+
+  def ==(other)
+    @username == other.username
+  end
 end

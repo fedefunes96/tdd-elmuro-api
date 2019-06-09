@@ -53,4 +53,11 @@ describe 'SubjectRepository' do
     expect(repo.find_by_code('7515')).to eq(nil)
     expect(repo.find_by_code('6620')).to eq(nil)
   end
+
+  it 'reads all correctly' do
+    repo.save(subject1)
+    all = repo.all_subjects
+
+    expect(all.include?(subject1)).to eq true
+  end
 end

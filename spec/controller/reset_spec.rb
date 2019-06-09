@@ -1,7 +1,7 @@
 require 'rspec'
 require 'rack/test'
-require_relative '../app/app'
-require_relative 'spec_helper'
+require_relative '../../app/app'
+require_relative '../spec_helper'
 
 describe 'reset' do
   include Rack::Test::Methods

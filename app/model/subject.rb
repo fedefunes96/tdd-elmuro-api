@@ -19,6 +19,10 @@ class Subject
     @laboratory = laboratory
   end
 
+  def ==(other)
+    @code == other.code
+  end
+
   private
 
   def validate_params!(code, laboratory, max_students, projector, name)

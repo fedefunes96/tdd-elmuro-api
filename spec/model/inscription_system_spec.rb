@@ -49,4 +49,27 @@ describe InscriptionSystem do
 
     expect(new_system.inscripted_to?(student, subject1)).to eq(true)
   end
+
+  it '30 slots subject remaining slots after one inscription should be 29' do
+    inscription_system.create_inscription(student, subject1)
+
+    expect(inscription_system.remaining_slots(subject1)).to eq 29
+  end
+
+  it 'should say if a student has passed a subject' do
+    inscription = inscription_system.create_inscription(student, subject1)
+    inscription.add_grades([10])
+    expect(inscription_system.passed_subject?(student, subject1)).to eq true
+  end
+
+  it 'passed_subject should be false if student has not passed a subject' do
+    expect(inscription_system.passed_subject?(student, subject1)).to eq false
+  end
+
+  it 'passed_subject should be false if another student has passed the subject' do
+    other_student = Student.new('other name', 'other_username')
+    inscription = inscription_system.create_inscription(other_student, subject1)
+    inscription.add_grades([10])
+    expect(inscription_system.passed_subject?(student, subject1)).to eq false
+  end
 end
