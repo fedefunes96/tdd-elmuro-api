@@ -9,6 +9,6 @@ class AcademicOffer
   end
 
   def all_subjects
-    @subjects
+    @subjects.clone
   end
 end

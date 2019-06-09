@@ -36,4 +36,10 @@ describe AcademicOffer do
     expect(academic_offer.all_subjects.include?(subject1)).to eq true
     expect(academic_offer.all_subjects.include?(subject2)).to eq true
   end
+
+  it 'subjects can not be modified from the outside' do
+    subjects = academic_offer.all_subjects
+    subjects << Subject.new('memo3', '1001', 'SergioVi', 30, false, false)
+    expect(academic_offer.all_subjects.size).to eq 2
+  end
 end
