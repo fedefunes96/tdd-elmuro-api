@@ -5,7 +5,7 @@ require_relative '../../app/model/academic_offer'
 require_relative '../../app/model/inscription_system'
 
 class AcademicOfferController
-  USERNAME = 'username'.freeze
+  USERNAME = 'usernameAlumno'.freeze
 
   def initialize
     subjects = SubjectRepository.new.all_subjects
