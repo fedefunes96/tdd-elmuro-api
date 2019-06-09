@@ -65,4 +65,11 @@ describe InscriptionSystem do
   it 'passed_subject should be false if student has not passed a subject' do
     expect(inscription_system.passed_subject?(student, subject1)).to eq false
   end
+
+  it 'passed_subject should be false if another student has passed the subject' do
+    other_student = Student.new('other name', 'other_username')
+    inscription = inscription_system.create_inscription(other_student, subject1)
+    inscription.add_grades([10])
+    expect(inscription_system.passed_subject?(student, subject1)).to eq false
+  end
 end
