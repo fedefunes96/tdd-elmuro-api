@@ -1,5 +1,11 @@
 class SubjectTypeParser
-  def parse(_type)
-    :finals
+  TYPES = {
+    parciales: :midterms,
+    coloquio: :finals,
+    tareas: :assignments
+  }.freeze
+
+  def parse(type)
+    TYPES[type.to_sym]
   end
 end
