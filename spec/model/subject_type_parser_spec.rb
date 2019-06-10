@@ -9,4 +9,8 @@ describe SubjectTypeParser do
   it 'returns :assignments for tareas' do
     expect(described_class.new.parse('tareas')).to eq :assignments
   end
+
+  it 'returns :midterms for parciales' do
+    expect(described_class.new.parse('parciales')).to eq :midterms
+  end
 end
