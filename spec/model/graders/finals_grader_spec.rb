@@ -29,4 +29,8 @@ describe FinalsGrader do
   it 'final grade for [6] grades is 6' do
     expect(grader.final_grade([6])).to eq 6
   end
+
+  it 'invalid grades for final_grade throws error' do
+    expect { grader.final_grade([-1]) }.to raise_error(InvalidGradeError)
+  end
 end

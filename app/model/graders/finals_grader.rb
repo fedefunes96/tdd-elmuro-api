@@ -9,6 +9,7 @@ class FinalsGrader
   end
 
   def final_grade(grades)
+    validate!(grades)
     grades.first
   end
 
