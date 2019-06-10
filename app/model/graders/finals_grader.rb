@@ -1,5 +1,6 @@
 class FinalsGrader
   MAX_GRADES = 1
+  MAX_GRADE_VALUE = 10
 
   def validate!(grades)
     raise InvalidGradeError if grades.size > MAX_GRADES
@@ -10,6 +11,6 @@ class FinalsGrader
   private
 
   def valid_grade?(grade)
-    grade.is_a?(Numeric) && grade.positive?
+    grade.is_a?(Numeric) && grade.positive? && grade <= MAX_GRADE_VALUE
   end
 end
