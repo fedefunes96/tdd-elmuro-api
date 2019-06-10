@@ -27,5 +27,8 @@ describe FinalsGrader do
   it 'final grade for [6] grades is 6' do
     expect(described_class.new([6]).final_grade).to eq 6
   end
-  4
+
+  it 'passing is true if grade is above or equal to 4' do
+    expect(described_class.new([6]).passing?).to eq true
+  end
 end

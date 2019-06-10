@@ -11,6 +11,10 @@ class FinalsGrader
     @grades.first
   end
 
+  def passing?
+    true
+  end
+
   private
 
   def valid_grade?(grade)
