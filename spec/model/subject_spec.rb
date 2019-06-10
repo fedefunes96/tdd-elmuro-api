@@ -65,4 +65,8 @@ describe Subject do
     other = described_class.new('memo2', '5221', 'NicoPaez', 30, false, false, :finals)
     expect(one_subject == other).to eq false
   end
+
+  it 'should allow subject type to be :finals' do
+    described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :finals)
+  end
 end
