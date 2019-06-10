@@ -9,6 +9,10 @@ class AssignmentsGrader < BaseGrader
     mean >= FINAL_PASS_GRADE && failed_count < MAX_FAILED_PERMITTED
   end
 
+  def final_grade
+    10
+  end
+
   private
 
   def mean
