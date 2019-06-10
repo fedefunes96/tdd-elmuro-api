@@ -14,4 +14,8 @@ describe AssignmentsGrader do
   it 'an average above or equal to 6 considered a pass' do
     expect(described_class.new([10, 4]).passing?).to eq true
   end
+
+  it 'an average above 6 but with 3 grades under 4 is considered a fail' do
+    expect(described_class.new([10, 1, 1, 10, 10]).passing?).to eq false
+  end
 end
