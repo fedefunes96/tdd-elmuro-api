@@ -10,7 +10,7 @@ class AssignmentsGrader < BaseGrader
   end
 
   def final_grade
-    10
+    mean
   end
 
   private

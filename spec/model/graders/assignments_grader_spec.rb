@@ -22,4 +22,8 @@ describe AssignmentsGrader do
   it 'final grade is the mean grade' do
     expect(described_class.new([10]).final_grade).to eq 10
   end
+
+  it 'final grade of several grades is the mean grade' do
+    expect(described_class.new([10, 9, 8]).final_grade).to eq 9
+  end
 end
