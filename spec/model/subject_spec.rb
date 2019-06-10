@@ -69,4 +69,8 @@ describe Subject do
   it 'should allow subject type to be :finals' do
     described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :finals)
   end
+
+  it 'should allow subject type to be :midterms' do
+    described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :midterms)
+  end
 end
