@@ -35,11 +35,24 @@ describe 'Estado alumno' do
     expect(JSON.parse(last_response.body)['estado']).to eq('NO_INSCRIPTO')
   end
 
+  it 'responds with no grade if user not inscripted' do
+    get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+    expect(last_response.status).to eq 200
+    expect(JSON.parse(last_response.body)['nota_final']).to eq(nil)
+  end
+
   it 'responds ok if user is inscripted to the subject' do
     InscriptionRepository.new.save(inscription)
     get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
     expect(last_response.status).to eq 200
     expect(JSON.parse(last_response.body)['estado']).to eq('EN_CURSO')
+  end
+
+  it 'responds with no grade if user inscripted but not yet graded' do
+    InscriptionRepository.new.save(inscription)
+    get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+    expect(last_response.status).to eq 200
+    expect(JSON.parse(last_response.body)['nota_final']).to eq(nil)
   end
 
   it 'responds with error if it does not have all the params' do
@@ -69,6 +82,15 @@ describe 'Estado alumno' do
 
       get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
       expect(JSON.parse(last_response.body)['estado']).to eq('DESAPROBADO')
+    end
+
+    it 'responds with a grade' do
+      post_with_body('/calificar', codigo_materia: subject1.code,
+                                   notas: '10',
+                                   username_alumno: student1.username)
+
+      get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+      expect(JSON.parse(last_response.body)['nota_final']).to eq(10)
     end
   end
 end

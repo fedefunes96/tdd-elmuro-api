@@ -50,8 +50,10 @@ class StateController
 
     return [INSCRIPTED, nil] unless inscription.graded?
 
-    return [DESAPROBADO, nil] unless inscription.passing?
+    grade = inscription.final_grade
 
-    [APROBADO, nil]
+    return [DESAPROBADO, grade] unless inscription.passing?
+
+    [APROBADO, grade]
   end
 end
