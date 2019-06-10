@@ -26,4 +26,8 @@ describe AssignmentsGrader do
   it 'final grade of several grades is the mean grade' do
     expect(described_class.new([10, 9, 8]).final_grade).to eq 9
   end
+
+  it 'average under 6 is considered a fail' do
+    expect(described_class.new([10, 1]).passing?).to eq false
+  end
 end
