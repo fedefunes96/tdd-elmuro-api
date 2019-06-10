@@ -31,4 +31,8 @@ describe FinalsGrader do
   it 'passing is true if grade is above or equal to 4' do
     expect(described_class.new([6]).passing?).to eq true
   end
+
+  it 'passing is false if grade is below 4' do
+    expect(described_class.new([2]).passing?).to eq false
+  end
 end

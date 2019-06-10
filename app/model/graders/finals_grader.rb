@@ -2,6 +2,8 @@ class FinalsGrader
   MAX_GRADES = 1
   MAX_GRADE_VALUE = 10
 
+  PASSING_GRADE = 4
+
   def initialize(grades)
     validate!(grades)
     @grades = grades
@@ -12,7 +14,7 @@ class FinalsGrader
   end
 
   def passing?
-    true
+    final_grade >= PASSING_GRADE
   end
 
   private
