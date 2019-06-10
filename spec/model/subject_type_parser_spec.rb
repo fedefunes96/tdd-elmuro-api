@@ -13,4 +13,8 @@ describe SubjectTypeParser do
   it 'returns :midterms for parciales' do
     expect(described_class.new.parse('parciales')).to eq :midterms
   end
+
+  it 'returns nil when type is not found' do
+    expect(described_class.new.parse('invalid').nil?). to eq true
+  end
 end
