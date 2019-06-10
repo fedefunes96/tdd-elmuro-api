@@ -5,6 +5,7 @@ require_relative '../exceptions/invalid_subject_settings_error'
 require_relative '../helpers/parameter_helper'
 require_relative '../helpers/status_code'
 require_relative '../helpers/error_helper'
+require_relative '../helpers/subject_type_parser'
 
 class SubjectController
   PARAMS = {
@@ -21,11 +22,6 @@ class SubjectController
   CODE_NOT_UNIQUE = 'MATERIA_DUPLICADA'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
 
-  SUBJECT_TYPES = {
-    parciales: :midterms,
-    coloquio: :finals,
-    tareas: :assignments
-  }.freeze
   def create(body)
     unless ParameterHelper.new(PARAMS).all_params?(body)
       return api_response(PARAMETER_MISSING, StatusCode::BAD_REQUEST)
@@ -86,7 +82,7 @@ class SubjectController
   end
 
   def subject_type(body)
-    type = body[PARAMS[:type]].to_sym
-    SUBJECT_TYPES[type]
+    type = body[PARAMS[:type]]
+    SubjectTypeParser.new.parse(type)
   end
 end
