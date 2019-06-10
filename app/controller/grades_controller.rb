@@ -34,7 +34,11 @@ class GradesController
 
     return api_response(INVALID_CODE, StatusCode::BAD_REQUEST) if inscription.nil?
 
-    grades = parse_grades(body[PARAMS[:grades]])
+    begin
+      grades = parse_grades(body[PARAMS[:grades]])
+    rescue JSON::ParserError
+      return api_response(GRADE_ERROR, StatusCode::BAD_REQUEST)
+    end
     begin
       inscription.add_grades(grades)
     rescue GuaraniError

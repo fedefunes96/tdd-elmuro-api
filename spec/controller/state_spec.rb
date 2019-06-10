@@ -1,6 +1,6 @@
 require 'rspec'
 require 'rack/test'
-require_relative '../app/app'
+require_relative '../../app/app'
 
 describe 'Estado alumno' do
   include Rack::Test::Methods
@@ -11,7 +11,7 @@ describe 'Estado alumno' do
     student
   end
   let(:subject1) do
-    subject1 = Subject.new('Orga de compus', '1001', 'NicoPaez', 15, true, false)
+    subject1 = Subject.new('Orga de compus', '1001', 'NicoPaez', 15, true, false, :finals)
     SubjectRepository.new.save(subject1)
     subject1
   end
@@ -25,25 +25,25 @@ describe 'Estado alumno' do
   end
 
   it 'accepts a get to /estado' do
-    get_with_body('/estado', {})
+    get_with_token('/estado', {})
     expect(last_response.status).not_to eq 404
   end
 
   it 'responds with user not inscripted if user is not inscripted' do
-    get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+    get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
     expect(last_response.status).to eq 200
     expect(JSON.parse(last_response.body)['estado']).to eq('no_inscripto')
   end
 
   it 'responds error if subject does not exists' do
-    get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: '3000')
+    get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: '3000')
     expect(last_response.status).to eq 400
     expect(JSON.parse(last_response.body)['estado']).to eq('materia_inexistente')
   end
 
   it 'responds ok if user is inscripted to the subject' do
     InscriptionRepository.new.save(inscription)
-    get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+    get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
     expect(last_response.status).to eq 200
     expect(JSON.parse(last_response.body)['estado']).to eq('inscripto')
   end
@@ -58,7 +58,7 @@ describe 'Estado alumno' do
                                    notas: '10',
                                    username_alumno: student1.username)
 
-      get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+      get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
       expect(JSON.parse(last_response.body)['estado']).to eq('aprobado')
     end
 
@@ -67,7 +67,7 @@ describe 'Estado alumno' do
                                    notas: '2',
                                    username_alumno: student1.username)
 
-      get_with_body('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
+      get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
       expect(JSON.parse(last_response.body)['estado']).to eq('desaprobado')
     end
   end

@@ -1,6 +1,6 @@
 require 'rspec'
 require 'rack/test'
-require_relative '../app/app'
+require_relative '../../app/app'
 
 describe 'Grades endpoint' do
   include Rack::Test::Methods
@@ -11,7 +11,7 @@ describe 'Grades endpoint' do
     student
   end
   let(:subject1) do
-    subject1 = Subject.new('Orga de compus', '1001', 'NicoPaez', 15, true, false)
+    subject1 = Subject.new('Orga de compus', '1001', 'NicoPaez', 15, true, false, :finals)
     SubjectRepository.new.save(subject1)
     subject1
   end
@@ -79,6 +79,13 @@ describe 'Grades endpoint' do
   it 'returns 400 if an invalid grade is passed' do
     post_with_body('/calificar', codigo_materia: '1001',
                                  notas: '-10',
+                                 username_alumno: 'juanperez')
+    expect(last_response.status).to eq 400
+  end
+
+  it 'returns 400 if grade is not numeric' do
+    post_with_body('/calificar', codigo_materia: '1001',
+                                 notas: 'string',
                                  username_alumno: 'juanperez')
     expect(last_response.status).to eq 400
   end

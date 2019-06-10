@@ -21,13 +21,13 @@ class InscriptionController
 
   def create(body)
     unless ParameterHelper.new(PARAMS).all_params?(body)
-      return api_response(PARAMETER_MISSING), StatusCode::BAD_REQUEST
+      return api_response(PARAMETER_MISSING, StatusCode::BAD_REQUEST)
     end
 
     message, status = create_inscription(body[PARAMS[:name]],
                                          body[PARAMS[:code]],
                                          body[PARAMS[:username]])
-    [api_response(message), status]
+    api_response(message, status)
   end
 
   private
@@ -60,7 +60,15 @@ class InscriptionController
     student
   end
 
-  def api_response(message)
-    { error: message, resultado: message }
+  def api_response(message, status)
+    key = if status == StatusCode::BAD_REQUEST
+            'error'
+          else
+            'resultado'
+          end
+
+    response = {}
+    response[key] = message
+    [response, status]
   end
 end

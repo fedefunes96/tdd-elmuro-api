@@ -11,7 +11,8 @@ class SubjectController
     name: 'nombreMateria',
     code: 'codigo',
     teacher: 'docente',
-    max_students: 'cupo'
+    max_students: 'cupo',
+    type: 'modalidad'
   }.freeze
 
   PROJECTOR = 'proyector'.freeze
@@ -22,16 +23,16 @@ class SubjectController
 
   def create(body)
     unless ParameterHelper.new(PARAMS).all_params?(body)
-      return api_response(PARAMETER_MISSING), StatusCode::BAD_REQUEST
+      return api_response(PARAMETER_MISSING, StatusCode::BAD_REQUEST)
     end
 
     if code_already_exists? body[PARAMS[:code]]
-      return api_response(CODE_NOT_UNIQUE),
-      StatusCode::BAD_REQUEST
+      return api_response(CODE_NOT_UNIQUE,
+                          StatusCode::BAD_REQUEST)
     end
 
     message, status = create_subject(body)
-    [api_response(message), status]
+    api_response(message, status)
   end
 
   private
@@ -51,7 +52,7 @@ class SubjectController
     laboratory = body[LABORATORY] || false
 
     Subject.new(body[PARAMS[:name]], body[PARAMS[:code]], body[PARAMS[:teacher]],
-                body[PARAMS[:max_students]], projector, laboratory)
+                body[PARAMS[:max_students]], projector, laboratory, body[PARAMS[:type]])
   end
 
   def map_setting_to_boolean(value)
@@ -67,7 +68,15 @@ class SubjectController
     !SubjectRepository.new.find_by_code(code).nil?
   end
 
-  def api_response(message)
-    { error: message, resultado: message }
+  def api_response(message, status)
+    key = if status == StatusCode::BAD_REQUEST
+            'error'
+          else
+            'resultado'
+          end
+
+    response = {}
+    response[key] = message
+    [response, status]
   end
 end

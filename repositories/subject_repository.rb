@@ -8,6 +8,10 @@ class SubjectRepository < BaseRepository
     load_subject(row) unless row.nil?
   end
 
+  def all_subjects
+    all.map(&method(:load_subject))
+  end
+
   protected
 
   def find_dataset(subject)
@@ -16,7 +20,7 @@ class SubjectRepository < BaseRepository
 
   def load_subject(row)
     Subject.new row[:name], row[:code], row[:teacher],
-                row[:max_students], row[:projector], row[:laboratory]
+                row[:max_students], row[:projector], row[:laboratory], row[:type]
   end
 
   def changeset(subject)

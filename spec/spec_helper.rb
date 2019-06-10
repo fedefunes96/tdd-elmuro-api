@@ -12,7 +12,7 @@ def post_with_body(uri, body)
   post(uri, body.to_json, CONTENT_TYPE: 'application/json')
 end
 
-def get_with_body(uri, params)
+def get_with_token(uri, *params)
   header 'Api-Token', TOKEN
-  get(uri, params)
+  get(uri, *params)
 end

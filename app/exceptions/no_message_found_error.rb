@@ -1,0 +1,2 @@
+class NoMessageFoundError < RuntimeError
+end

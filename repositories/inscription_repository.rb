@@ -72,6 +72,7 @@ class InscriptionRepository < BaseRepository
                 row[:teacher],
                 row[:max_students],
                 row[:projector],
-                row[:laboratory])
+                row[:laboratory],
+                row[:type])
   end
 end
