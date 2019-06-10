@@ -6,7 +6,7 @@ require_relative '../spec_helper'
 describe 'Alta materias' do
   include Rack::Test::Methods
   let(:student) { Student.new('Juan Perez', 'juanperez') }
-  let(:subject1) { Subject.new('Tecnicas 2', '7592', 'NicoPaez', 10, true, false) }
+  let(:subject1) { Subject.new('Tecnicas 2', '7592', 'NicoPaez', 10, true, false, :finals) }
   let(:inscription) { Inscription.new(student, subject1) }
 
   before(:each) do
@@ -59,7 +59,7 @@ describe 'Alta materias' do
   end
 
   it 'two subjects should show up in the offer if both exist' do
-    SubjectRepository.new.save(Subject.new('Tecnicas 1', '7510', 'Emilio', 10, true, false))
+    SubjectRepository.new.save(Subject.new('tdd1', '7510', 'Emilio', 10, true, false, :finals))
     subjects = response_offer
     expect(subjects.size).to eq 2
   end

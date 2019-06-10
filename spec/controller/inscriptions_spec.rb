@@ -10,7 +10,7 @@ describe 'Inscripcion alumnos' do
   end
 
   let(:student) { Student.new('Juan Perez', 'juanperez') }
-  let(:subject1) { Subject.new('Tecnicas 2', '7592', 'NicoPaez', 10, true, false) }
+  let(:subject1) { Subject.new('Tecnicas 2', '7592', 'NicoPaez', 10, true, false, :finals) }
 
   before(:each) do
     SubjectRepository.new.save(subject1)

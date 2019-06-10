@@ -6,8 +6,8 @@ require_relative '../../app/model/subject'
 require_relative '../../app/model/inscription_system'
 
 describe AcademicOffer do
-  let(:subject1) { Subject.new('memo2', '9521', 'NicoPaez', 30, false, false) }
-  let(:subject2) { Subject.new('memo1', '9520', 'SergioVi', 30, false, false) }
+  let(:subject1) { Subject.new('memo2', '9521', 'NicoPaez', 30, false, false, :finals) }
+  let(:subject2) { Subject.new('memo1', '9520', 'SergioVi', 30, false, false, :finals) }
   let(:student) { Student.new('Juan Perez', 'juanperez') }
   let(:inscription_system) { InscriptionSystem.new }
 
@@ -39,7 +39,7 @@ describe AcademicOffer do
 
   it 'subjects can not be modified from the outside' do
     subjects = academic_offer.all_subjects
-    subjects << Subject.new('memo3', '1001', 'SergioVi', 30, false, false)
+    subjects << Subject.new('memo3', '1001', 'SergioVi', 30, false, false, :finals)
     expect(academic_offer.all_subjects.size).to eq 2
   end
 end

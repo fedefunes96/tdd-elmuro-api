@@ -7,9 +7,9 @@ class Subject
   MAX_STUDENTS_LIMIT = 300
   MAX_CODE_LENGTH = 4
   MAX_NAME_LENGTH = 50
-  attr_accessor :name, :code, :max_students, :teacher, :projector, :laboratory
+  attr_accessor :name, :code, :max_students, :teacher, :projector, :laboratory, :type
 
-  def initialize(name, code, teacher, max_students, projector, laboratory)
+  def initialize(name, code, teacher, max_students, projector, laboratory, type)
     validate_params!(code, laboratory, max_students, projector, name)
     @name = name
     @code = code
@@ -17,6 +17,7 @@ class Subject
     @max_students = max_students
     @projector = projector
     @laboratory = laboratory
+    @type = type
   end
 
   def ==(other)
