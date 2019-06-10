@@ -19,8 +19,7 @@ class InscriptionSystem
 
   def inscripted_to?(student, subject)
     @inscriptions.any? do |inscription|
-      inscription.subject == subject &&
-        inscription.student == student
+      inscription_of?(inscription, student, subject)
     end
   end
 
@@ -41,6 +40,11 @@ class InscriptionSystem
   attr_accessor :inscriptions
 
   private
+
+  def inscription_of?(inscription, student, subject)
+    inscription.subject == subject &&
+      inscription.student == student
+  end
 
   def occupied_slots(subject)
     @inscriptions.count do |inscription|
