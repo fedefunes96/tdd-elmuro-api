@@ -22,7 +22,7 @@ class Inscription
   end
 
   def passing?
-    return false if @grades.empty?
+    return false unless graded?
 
     @grader.passing?
   end
