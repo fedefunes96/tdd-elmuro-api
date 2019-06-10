@@ -63,4 +63,11 @@ describe Inscription do
   it 'final grade of no grades subject throws an error' do
     expect { inscription.final_grade }.to raise_error(NoGradesError)
   end
+
+  it 'final grade of an assignments subject is the average' do
+    subject2 = Subject.new('memo2', '9520', 'SergioV', 30, false, false, :assignments)
+    new_inscription = described_class.new(student, subject2)
+    new_inscription.add_grades([10, 6])
+    expect(new_inscription.final_grade).to eq 8
+  end
 end
