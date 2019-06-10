@@ -73,6 +73,6 @@ class InscriptionRepository < BaseRepository
                 row[:max_students],
                 row[:projector],
                 row[:laboratory],
-                row[:type])
+                row[:type].to_sym)
   end
 end

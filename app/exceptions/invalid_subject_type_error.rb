@@ -1,0 +1,2 @@
+class InvalidSubjectTypeError < GuaraniError
+end

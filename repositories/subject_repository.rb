@@ -19,8 +19,8 @@ class SubjectRepository < BaseRepository
   end
 
   def load_subject(row)
-    Subject.new row[:name], row[:code], row[:teacher],
-                row[:max_students], row[:projector], row[:laboratory], row[:type]
+    Subject.new(row[:name], row[:code], row[:teacher],
+                row[:max_students], row[:projector], row[:laboratory], row[:type].to_sym)
   end
 
   def changeset(subject)
@@ -30,7 +30,8 @@ class SubjectRepository < BaseRepository
       teacher: subject.teacher,
       max_students: subject.max_students,
       projector: subject.projector,
-      laboratory: subject.laboratory
+      laboratory: subject.laboratory,
+      type: subject.type.to_s
     }
   end
 end

@@ -3,6 +3,7 @@ require_relative '../../app/exceptions/student_limit_error'
 require_relative '../../app/exceptions/invalid_max_students_error'
 require_relative '../../app/exceptions/invalid_subject_code_error'
 require_relative '../../app/exceptions/invalid_subject_name_error'
+require_relative '../../app/exceptions/invalid_subject_type_error'
 
 describe Subject do
   it 'max students has to be at most 300' do
@@ -76,5 +77,10 @@ describe Subject do
 
   it 'should allow subject type to be :assignments' do
     described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :assignments)
+  end
+
+  it 'should not allow any other subject type' do
+    expect { described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :invalid) }
+      .to raise_error(InvalidSubjectTypeError)
   end
 end

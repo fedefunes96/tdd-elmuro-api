@@ -21,6 +21,11 @@ class SubjectController
   CODE_NOT_UNIQUE = 'MATERIA_DUPLICADA'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
 
+  SUBJECT_TYPES = {
+    parciales: :midterms,
+    coloquio: :finals,
+    tareas: :assignments
+  }.freeze
   def create(body)
     unless ParameterHelper.new(PARAMS).all_params?(body)
       return api_response(PARAMETER_MISSING, StatusCode::BAD_REQUEST)
@@ -52,7 +57,7 @@ class SubjectController
     laboratory = body[LABORATORY] || false
 
     Subject.new(body[PARAMS[:name]], body[PARAMS[:code]], body[PARAMS[:teacher]],
-                body[PARAMS[:max_students]], projector, laboratory, body[PARAMS[:type]])
+                body[PARAMS[:max_students]], projector, laboratory, subject_type(body))
   end
 
   def map_setting_to_boolean(value)
@@ -78,5 +83,10 @@ class SubjectController
     response = {}
     response[key] = message
     [response, status]
+  end
+
+  def subject_type(body)
+    type = body[PARAMS[:type]].to_sym
+    SUBJECT_TYPES[type]
   end
 end
