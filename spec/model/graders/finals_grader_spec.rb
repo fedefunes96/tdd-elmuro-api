@@ -1,6 +1,7 @@
 require 'rspec'
 
 require_relative '../../../app/model/graders/finals_grader'
+require_relative '../../../app/exceptions/invalid_grade_error'
 
 describe FinalsGrader do
   it 'accepts a single grade as valid' do
@@ -8,6 +9,6 @@ describe FinalsGrader do
   end
 
   it 'rejects more than one grade as invalid' do
-    described_class.new.validate!([10, 10])
+    expect { described_class.new.validate!([10, 10]) }.to raise_error(InvalidGradeError)
   end
 end
