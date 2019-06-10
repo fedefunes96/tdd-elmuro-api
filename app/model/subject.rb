@@ -39,6 +39,8 @@ class Subject
   end
 
   def get_grader(grades)
+    raise InvalidSubjectTypeError if GRADERS[@type].nil?
+
     GRADERS[@type].new(grades)
   end
 
