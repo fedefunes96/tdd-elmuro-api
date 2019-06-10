@@ -3,6 +3,7 @@ require 'json'
 require_relative 'controller/subject_controller'
 require_relative 'controller/inscription_controller'
 require_relative 'controller/grades_controller'
+require_relative 'controller/state_controller'
 require_relative 'controller/academic_offer_controller'
 require_relative '../repositories/student_repository'
 require_relative '../repositories/inscription_repository'
@@ -43,6 +44,12 @@ post '/calificar' do
   content_type :json
   body = JSON.parse(request.body.read)
   message, status_code = GradesController.new.grade(body)
+  status status_code
+  message.to_json
+end
+
+get '/materias/estado' do
+  message, status_code = StateController.new.state(request.params)
   status status_code
   message.to_json
 end
