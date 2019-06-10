@@ -8,6 +8,10 @@ class FinalsGrader
     grades.each { |x| raise InvalidGradeError unless valid_grade?(x) }
   end
 
+  def final_grade(grades)
+    grades.first
+  end
+
   private
 
   def valid_grade?(grade)

@@ -25,4 +25,8 @@ describe FinalsGrader do
   it 'rejects a grade above 10 as invalid' do
     expect { grader.validate!([11]) }.to raise_error(InvalidGradeError)
   end
+
+  it 'final grade for [6] grades is 6' do
+    expect(grader.final_grade([6])).to eq 6
+  end
 end
