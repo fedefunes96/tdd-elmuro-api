@@ -18,49 +18,49 @@ describe Inscription do
     it 'should respond to subject' do
       expect(inscription.subject.name).to eq('memo2')
     end
+  end
 
-    it 'inscription is not passed if grades are empty' do
-      expect(inscription.passing?).to eq false
-    end
+  it 'inscription is not passed if grades are empty' do
+    expect(inscription.passing?).to eq false
+  end
 
-    it 'inscription is passed if a grade above 4 exists' do
-      inscription.add_grades([4])
-      expect(inscription.passing?).to eq true
-    end
+  it 'inscription is passed if a grade above 4 exists' do
+    inscription.add_grades([4])
+    expect(inscription.passing?).to eq true
+  end
 
-    it 'inscription is not passed if grade is 3' do
-      inscription.add_grades([3])
-      expect(inscription.passing?).to eq false
-    end
+  it 'inscription is not passed if grade is 3' do
+    inscription.add_grades([3])
+    expect(inscription.passing?).to eq false
+  end
 
-    it 'grades can not be above 10' do
-      expect { inscription.add_grades([11]) }.to raise_error(InvalidGradeError)
-    end
+  it 'grades can not be above 10' do
+    expect { inscription.add_grades([11]) }.to raise_error(InvalidGradeError)
+  end
 
-    it 'initially inscription is not graded' do
-      expect(inscription.graded?).to eq false
-    end
+  it 'initially inscription is not graded' do
+    expect(inscription.graded?).to eq false
+  end
 
-    it 'inscriptions once added a grade are considered graded' do
-      inscription.add_grades([3])
-      expect(inscription.graded?).to eq true
-    end
+  it 'inscriptions once added a grade are considered graded' do
+    inscription.add_grades([3])
+    expect(inscription.graded?).to eq true
+  end
 
-    it 'grades can not be negative' do
-      expect { inscription.add_grades([-1]) }.to raise_error(InvalidGradeError)
-    end
+  it 'grades can not be negative' do
+    expect { inscription.add_grades([-1]) }.to raise_error(InvalidGradeError)
+  end
 
-    it 'should raise error when grades are not numeric' do
-      expect { inscription.add_grades(['a string']) }.to raise_error(InvalidGradeError)
-    end
+  it 'should raise error when grades are not numeric' do
+    expect { inscription.add_grades(['a string']) }.to raise_error(InvalidGradeError)
+  end
 
-    it 'final grade of a finals subject is the same grade' do
-      inscription.add_grades([3])
-      expect(inscription.final_grade).to eq 3
-    end
+  it 'final grade of a finals subject is the same grade' do
+    inscription.add_grades([3])
+    expect(inscription.final_grade).to eq 3
+  end
 
-    it 'final grade of no grades subject throws an error' do
-      expect { inscription.final_grade }.to raise_error(NoGradesError)
-    end
+  it 'final grade of no grades subject throws an error' do
+    expect { inscription.final_grade }.to raise_error(NoGradesError)
   end
 end
