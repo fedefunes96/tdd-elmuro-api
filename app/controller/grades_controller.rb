@@ -31,7 +31,6 @@ class GradesController
   def update_grades(body)
     inscription = @inscription_repository
                   .find_by_student_and_code(body[PARAMS[:username]], body[PARAMS[:code]])
-
     return api_response(INVALID_CODE, StatusCode::BAD_REQUEST) if inscription.nil?
 
     begin
@@ -39,18 +38,20 @@ class GradesController
     rescue JSON::ParserError
       return api_response(GRADE_ERROR, StatusCode::BAD_REQUEST)
     end
+
     begin
       inscription.add_grades(grades)
     rescue GuaraniError
       return api_response(GRADE_ERROR, StatusCode::BAD_REQUEST)
     end
+
     @inscription_repository.save(inscription)
     [{ resultado: SUCCESS_MESSAGE }, StatusCode::OK]
   end
 
   def parse_grades(grades)
     [Integer(grades)]
-  rescue ArgumentError
+  rescue TypeError, ArgumentError
     JSON.parse(grades)
   end
 

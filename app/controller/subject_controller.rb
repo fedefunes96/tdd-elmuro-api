@@ -5,6 +5,7 @@ require_relative '../exceptions/invalid_subject_settings_error'
 require_relative '../helpers/parameter_helper'
 require_relative '../helpers/status_code'
 require_relative '../helpers/error_helper'
+require_relative '../helpers/subject_type_parser'
 
 class SubjectController
   PARAMS = {
@@ -52,7 +53,7 @@ class SubjectController
     laboratory = body[LABORATORY] || false
 
     Subject.new(body[PARAMS[:name]], body[PARAMS[:code]], body[PARAMS[:teacher]],
-                body[PARAMS[:max_students]], projector, laboratory, body[PARAMS[:type]])
+                body[PARAMS[:max_students]], projector, laboratory, subject_type(body))
   end
 
   def map_setting_to_boolean(value)
@@ -78,5 +79,10 @@ class SubjectController
     response = {}
     response[key] = message
     [response, status]
+  end
+
+  def subject_type(body)
+    type = body[PARAMS[:type]]
+    SubjectTypeParser.new.parse(type)
   end
 end

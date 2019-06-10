@@ -3,6 +3,7 @@ require_relative '../../app/exceptions/student_limit_error'
 require_relative '../../app/exceptions/invalid_max_students_error'
 require_relative '../../app/exceptions/invalid_subject_code_error'
 require_relative '../../app/exceptions/invalid_subject_name_error'
+require_relative '../../app/exceptions/invalid_subject_type_error'
 
 describe Subject do
   it 'max students has to be at most 300' do
@@ -64,5 +65,34 @@ describe Subject do
     one_subject = described_class.new('memo2', '9521', 'NicoPaez', 30, false, false, :finals)
     other = described_class.new('memo2', '5221', 'NicoPaez', 30, false, false, :finals)
     expect(one_subject == other).to eq false
+  end
+
+  it 'should allow subject type to be :finals' do
+    described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :finals)
+  end
+
+  it 'should allow subject type to be :midterms' do
+    described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :midterms)
+  end
+
+  it 'should allow subject type to be :assignments' do
+    described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :assignments)
+  end
+
+  it 'should not allow any other subject type' do
+    expect { described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :invalid) }
+      .to raise_error(InvalidSubjectTypeError)
+  end
+
+  it 'grader for finals subject is a FinalsGrader' do
+    subject = described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :finals)
+    expect(subject.get_grader([6]).final_grade).to eq 6
+  end
+
+  it 'grader for assignments subject is an AssigmentsGrader' do
+    subject = described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :assignments)
+    grader = subject.get_grader([9, 1])
+    expect(grader.final_grade).to eq 5
+    expect(grader.passing?).to eq false
   end
 end

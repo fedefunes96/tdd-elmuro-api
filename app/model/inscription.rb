@@ -1,15 +1,14 @@
 require_relative '../../app/exceptions/invalid_grade_error'
+require_relative '../../app/exceptions/no_grades_error'
 
 class Inscription
-  PASSING_GRADE = 4
-  MAX_GRADE = 10
-
   attr_accessor :student, :subject, :grades
 
   def initialize(student, subject)
     @student = student
     @subject = subject
     @grades = []
+    @grader = nil
   end
 
   def ==(other)
@@ -18,23 +17,23 @@ class Inscription
   end
 
   def add_grades(grades)
-    grades.each { |x| raise InvalidGradeError if not_valid_grade? x }
     @grades = grades
+    @grader = @subject.get_grader(grades) if graded?
   end
 
   def passing?
-    return false if @grades.empty?
+    return false unless graded?
 
-    @grades.first >= PASSING_GRADE
+    @grader.passing?
   end
 
   def graded?
     !@grades.empty?
   end
 
-  private
+  def final_grade
+    raise NoGradesError if @grader.nil?
 
-  def not_valid_grade?(grade)
-    !(grade.is_a? Numeric) || grade > MAX_GRADE || grade.negative?
+    @grader.final_grade
   end
 end
