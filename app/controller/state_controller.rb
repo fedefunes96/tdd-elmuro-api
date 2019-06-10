@@ -25,9 +25,9 @@ class StateController
       return error_response(PARAMETER_MISSING), StatusCode::BAD_REQUEST
     end
 
-    message, grade, status = retrieve_state(params[PARAMS[:username]],
-                                            params[PARAMS[:code]])
-    [api_response(message, grade), status]
+    message, grade = retrieve_state(params[PARAMS[:username]],
+                                    params[PARAMS[:code]])
+    [api_response(message, grade), StatusCode::OK]
   end
 
   private
@@ -45,24 +45,13 @@ class StateController
   def retrieve_state(username, code)
     inscription = InscriptionRepository.new
                                        .find_by_student_and_code(username, code)
-    if inscription.nil?
-      return [NOT_INSCRIPTED,
-              nil,
-              StatusCode::OK]
-    end
 
-    unless inscription.graded?
-      return [INSCRIPTED,
-              nil,
-              StatusCode::OK]
-    end
+    return [NOT_INSCRIPTED, nil] if inscription.nil?
 
-    unless inscription.passing?
-      return [DESAPROBADO,
-              nil,
-              StatusCode::OK]
-    end
+    return [INSCRIPTED, nil] unless inscription.graded?
 
-    [APROBADO, nil, StatusCode::OK]
+    return [DESAPROBADO, nil] unless inscription.passing?
+
+    [APROBADO, nil]
   end
 end
