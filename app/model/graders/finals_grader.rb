@@ -10,6 +10,6 @@ class FinalsGrader
   private
 
   def valid_grade?(grade)
-    grade.is_a? Numeric
+    grade.is_a?(Numeric) && grade.positive?
   end
 end

@@ -15,4 +15,8 @@ describe FinalsGrader do
   it 'rejects a non numeric grade as invalid' do
     expect { described_class.new.validate!(['aprobado']) }.to raise_error(InvalidGradeError)
   end
+
+  it 'rejects a negative grade as invalid' do
+    expect { described_class.new.validate!([-1]) }.to raise_error(InvalidGradeError)
+  end
 end
