@@ -17,6 +17,8 @@ class Inscription
   end
 
   def add_grades(grades)
+    raise(InvalidGradeError) if grades.empty?
+
     @grades = grades
     @grader = @subject.get_grader(grades) if graded?
   end

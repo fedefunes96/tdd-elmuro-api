@@ -50,7 +50,7 @@ class InscriptionRepository < BaseRepository
     subject = retrieve_subject(row)
     grades = retrieve_grades(row)
     inscription = Inscription.new student, subject
-    inscription.add_grades(grades)
+    inscription.add_grades(grades) unless grades.empty?
     inscription
   end
 

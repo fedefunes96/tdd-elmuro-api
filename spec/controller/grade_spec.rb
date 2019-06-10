@@ -89,4 +89,12 @@ describe 'Grades endpoint' do
                                  username_alumno: 'juanperez')
     expect(last_response.status).to eq 400
   end
+
+  it 'returns 400 if grade is empty array' do
+    InscriptionRepository.new.save(inscription)
+    post_with_body('/calificar', codigo_materia: '1001', notas: '[]',
+                                 username_alumno: 'juanperez')
+    expect(last_response.status).to eq 400
+    expect(last_response.body).to include('NOTA_INVALIDA')
+  end
 end
