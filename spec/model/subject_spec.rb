@@ -88,4 +88,11 @@ describe Subject do
     subject = described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :finals)
     expect(subject.get_grader([6]).final_grade).to eq 6
   end
+
+  it 'grader for assignments subject is an AssigmentsGrader' do
+    subject = described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :assignments)
+    grader = subject.get_grader([9, 1])
+    expect(grader.final_grade).to eq 5
+    expect(grader.passing?).to eq false
+  end
 end

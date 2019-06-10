@@ -3,6 +3,7 @@ require_relative '../exceptions/invalid_subject_settings_error'
 require_relative '../exceptions/invalid_max_students_error'
 require_relative '../exceptions/invalid_subject_name_error'
 require_relative '../model/graders/finals_grader'
+require_relative '../model/graders/assignments_grader'
 
 class Subject
   MAX_STUDENTS_LIMIT = 300
@@ -14,6 +15,11 @@ class Subject
     assignments
     finals
   ].freeze
+
+  GRADERS = {
+    finals: FinalsGrader,
+    assignments: AssignmentsGrader
+  }.freeze
 
   attr_accessor :name, :code, :max_students, :teacher, :projector, :laboratory, :type
 
@@ -33,7 +39,7 @@ class Subject
   end
 
   def get_grader(grades)
-    FinalsGrader.new(grades)
+    GRADERS[@type].new(grades)
   end
 
   private
