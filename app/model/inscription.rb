@@ -16,8 +16,8 @@ class Inscription
   end
 
   def add_grades(grades)
-    @grader = @subject.get_grader(grades)
     @grades = grades
+    @grader = @subject.get_grader(grades) unless @grades.empty?
   end
 
   def passing?

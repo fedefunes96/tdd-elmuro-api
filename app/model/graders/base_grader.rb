@@ -24,8 +24,14 @@ class BaseGrader
   end
 
   def validate!(grades)
-    raise InvalidGradeError if grades.size > MAX_GRADES
+    raise(InvalidGradeError) unless grade_count_valid?(grades.size)
 
     grades.each { |x| raise InvalidGradeError unless valid_grade?(x) }
+  end
+
+  protected
+
+  def grade_count_valid?(_grades_count)
+    raise NotImplementedError
   end
 end
