@@ -6,7 +6,7 @@ class AssignmentsGrader < BaseGrader
   SINGLE_ASSIGNMENT_FAIL_GRADE = 4
 
   def passing?
-    mean >= FINAL_PASS_GRADE && failed_count < MAX_FAILED_PERMITTED
+    mean >= FINAL_PASS_GRADE && failed_count <= MAX_FAILED_PERMITTED
   end
 
   def final_grade
