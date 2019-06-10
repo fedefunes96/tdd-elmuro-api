@@ -48,8 +48,8 @@ post '/calificar' do
   message.to_json
 end
 
-get '/estado' do
-  message, status_code = StateController.new.state(params)
+get '/materias/estado' do
+  message, status_code = StateController.new.state(request.params)
   status status_code
   message.to_json
 end

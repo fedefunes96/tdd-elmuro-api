@@ -39,7 +39,7 @@ class StateController
   def api_response(message, grade)
     return { estado: message } if grade.nil?
 
-    { estado: message, nota: grade }
+    { estado: message, nota_final: grade }
   end
 
   def retrieve_state(username, code)
