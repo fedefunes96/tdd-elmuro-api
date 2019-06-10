@@ -2,6 +2,7 @@ require_relative '../exceptions/student_limit_error'
 require_relative '../exceptions/invalid_subject_settings_error'
 require_relative '../exceptions/invalid_max_students_error'
 require_relative '../exceptions/invalid_subject_name_error'
+require_relative '../model/graders/finals_grader'
 
 class Subject
   MAX_STUDENTS_LIMIT = 300
@@ -29,6 +30,10 @@ class Subject
 
   def ==(other)
     @code == other.code
+  end
+
+  def get_grader(grades)
+    FinalsGrader.new(grades)
   end
 
   private

@@ -83,4 +83,9 @@ describe Subject do
     expect { described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :invalid) }
       .to raise_error(InvalidSubjectTypeError)
   end
+
+  it 'grader for finals subject is a FinalsGrader' do
+    subject = described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :finals)
+    expect(subject.get_grader([6]).final_grade).to eq 6
+  end
 end
