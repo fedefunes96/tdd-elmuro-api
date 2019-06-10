@@ -32,20 +32,14 @@ describe 'Estado alumno' do
   it 'responds with user not inscripted if user is not inscripted' do
     get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
     expect(last_response.status).to eq 200
-    expect(JSON.parse(last_response.body)['estado']).to eq('no_inscripto')
-  end
-
-  it 'responds error if subject does not exists' do
-    get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: '3000')
-    expect(last_response.status).to eq 400
-    expect(JSON.parse(last_response.body)['estado']).to eq('materia_inexistente')
+    expect(JSON.parse(last_response.body)['estado']).to eq('NO_INSCRIPTO')
   end
 
   it 'responds ok if user is inscripted to the subject' do
     InscriptionRepository.new.save(inscription)
     get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
     expect(last_response.status).to eq 200
-    expect(JSON.parse(last_response.body)['estado']).to eq('inscripto')
+    expect(JSON.parse(last_response.body)['estado']).to eq('EN_CURSO')
   end
 
   context 'when Student graded in a subject' do
@@ -59,7 +53,7 @@ describe 'Estado alumno' do
                                    username_alumno: student1.username)
 
       get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
-      expect(JSON.parse(last_response.body)['estado']).to eq('aprobado')
+      expect(JSON.parse(last_response.body)['estado']).to eq('APROBADO')
     end
 
     it 'responds ok if user is inscripted to the subject and disapproved' do
@@ -68,7 +62,7 @@ describe 'Estado alumno' do
                                    username_alumno: student1.username)
 
       get_with_token('/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
-      expect(JSON.parse(last_response.body)['estado']).to eq('desaprobado')
+      expect(JSON.parse(last_response.body)['estado']).to eq('DESAPROBADO')
     end
   end
 end

@@ -14,49 +14,55 @@ class StateController
     code: 'codigoMateria'
   }.freeze
 
-  NOT_INSCRIPTED = 'no_inscripto'.freeze
+  NOT_INSCRIPTED = 'NO_INSCRIPTO'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
-  SUBJECT_NOT_EXISTS = 'materia_inexistente'.freeze
-  INSCRIPTED = 'inscripto'.freeze
-  APROBADO = 'aprobado'.freeze
-  DESAPROBADO = 'desaprobado'.freeze
+  INSCRIPTED = 'EN_CURSO'.freeze
+  APROBADO = 'APROBADO'.freeze
+  DESAPROBADO = 'DESAPROBADO'.freeze
 
   def state(params)
     unless ParameterHelper.new(PARAMS).all_params?(params)
-      return api_response(PARAMETER_MISSING), StatusCode::BAD_REQUEST
+      return error_response(PARAMETER_MISSING), StatusCode::BAD_REQUEST
     end
 
-    message, status = retrieve_state(params[PARAMS[:username]],
-                                     params[PARAMS[:code]])
-    [api_response(message), status]
+    message, grade, status = retrieve_state(params[PARAMS[:username]],
+                                            params[PARAMS[:code]])
+    [api_response(message, grade), status]
   end
 
   private
 
-  def api_response(message)
-    { estado: message }
+  def error_response(message)
+    { error: message }
+  end
+
+  def api_response(message, grade)
+    return { estado: message } if grade.nil?
+
+    { estado: message, nota: grade }
   end
 
   def retrieve_state(username, code)
-    subject = SubjectRepository.new.find_by_code(code)
+    inscription = InscriptionRepository.new
+                                       .find_by_student_and_code(username, code)
+    if inscription.nil?
+      return [NOT_INSCRIPTED,
+              nil,
+              StatusCode::OK]
+    end
 
-    return [SUBJECT_NOT_EXISTS, StatusCode::BAD_REQUEST] if subject.nil?
+    unless inscription.graded?
+      return [INSCRIPTED,
+              nil,
+              StatusCode::OK]
+    end
 
-    student = StudentRepository.new.find_by_username(username)
-    inscriptions = InscriptionRepository.new.all_inscriptions
+    unless inscription.passing?
+      return [DESAPROBADO,
+              nil,
+              StatusCode::OK]
+    end
 
-    inscription_system = InscriptionSystem.new inscriptions
-
-    return [NOT_INSCRIPTED, StatusCode::OK] if not_inscripted?(student, subject, inscription_system)
-
-    return [INSCRIPTED, StatusCode::OK] unless inscription_system.graded?(student, subject)
-
-    return [DESAPROBADO, StatusCode::OK] unless inscription_system.passing?(student, subject)
-
-    [APROBADO, StatusCode::OK]
-  end
-
-  def not_inscripted?(student, subject, inscription_system)
-    student.nil? || !inscription_system.inscripted_to?(student, subject)
+    [APROBADO, nil, StatusCode::OK]
   end
 end

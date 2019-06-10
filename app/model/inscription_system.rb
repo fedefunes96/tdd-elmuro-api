@@ -35,26 +35,6 @@ class InscriptionSystem
     @inscriptions.select { |x| x.student == student && x.subject == subject && x.passing? }.any?
   end
 
-  def add_grades(student, subject, grades)
-    inscription = @inscriptions.select do |ins|
-      inscription_of?(ins, student, subject)
-    end.first
-
-    inscription.add_grades(grades)
-  end
-
-  def graded?(student, subject)
-    @inscriptions.any? do |inscription|
-      inscription_of?(inscription, student, subject) && inscription.graded?
-    end
-  end
-
-  def passing?(student, subject)
-    @inscriptions.any? do |inscription|
-      inscription_of?(inscription, student, subject) && inscription.passing?
-    end
-  end
-
   protected
 
   attr_accessor :inscriptions
