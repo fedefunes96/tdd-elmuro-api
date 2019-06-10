@@ -52,5 +52,10 @@ describe Inscription do
     it 'should raise error when grades are not numeric' do
       expect { inscription.add_grades(['a string']) }.to raise_error(InvalidGradeError)
     end
+
+    it 'final grade of a finals subject is the same grade' do
+      inscription.add_grades([3])
+      expect(inscription.final_grade).to eq 3
+    end
   end
 end

@@ -29,4 +29,8 @@ class Inscription
   def graded?
     !@grades.empty?
   end
+
+  def final_grade
+    @grader.final_grade
+  end
 end
