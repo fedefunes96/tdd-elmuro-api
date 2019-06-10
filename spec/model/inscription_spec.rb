@@ -3,6 +3,7 @@ require_relative '../../app/model/student'
 require_relative '../../app/model/subject'
 require_relative '../../app/model/inscription'
 require_relative '../../app/exceptions/invalid_grade_error'
+require_relative '../../app/exceptions/no_grades_error'
 
 describe Inscription do
   let(:student) { Student.new('Juan Perez', 'juanperez') }
@@ -56,6 +57,10 @@ describe Inscription do
     it 'final grade of a finals subject is the same grade' do
       inscription.add_grades([3])
       expect(inscription.final_grade).to eq 3
+    end
+
+    it 'final grade of no grades subject throws an error' do
+      expect { inscription.final_grade }.to raise_error(NoGradesError)
     end
   end
 end

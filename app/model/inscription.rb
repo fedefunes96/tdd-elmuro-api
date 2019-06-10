@@ -1,4 +1,5 @@
 require_relative '../../app/exceptions/invalid_grade_error'
+require_relative '../../app/exceptions/no_grades_error'
 
 class Inscription
   attr_accessor :student, :subject, :grades
@@ -31,6 +32,8 @@ class Inscription
   end
 
   def final_grade
+    raise NoGradesError if @grader.nil?
+
     @grader.final_grade
   end
 end
