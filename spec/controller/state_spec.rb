@@ -109,5 +109,12 @@ describe 'Estado alumno' do
       expect(JSON.parse(last_response.body)['estado']).to eq('APROBADO')
       expect(JSON.parse(last_response.body)['nota_final']).to eq(9)
     end
+
+    it 'responds disapproved if final grade is less than 6' do
+      post_with_body('/calificar', codigo_materia: subject2.code, notas: '[2, 4]', username_alumno: student1.username)
+      get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject2.code)
+      expect(JSON.parse(last_response.body)['estado']).to eq('DESAPROBADO')
+      expect(JSON.parse(last_response.body)['nota_final']).to eq(3)
+    end
   end
 end
