@@ -71,7 +71,11 @@ class Subject
   end
 
   def validate_name(name)
-    raise(InvalidSubjectNameError) if name.length > MAX_NAME_LENGTH || name.length < MIN_NAME_LENGTH
+    raise(InvalidSubjectNameError) unless valid_name?(name)
+  end
+
+  def valid_name?(name)
+    name.length.between?(MIN_NAME_LENGTH, MAX_NAME_LENGTH)
   end
 
   def validate_type(type)
