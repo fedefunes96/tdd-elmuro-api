@@ -95,4 +95,9 @@ describe Subject do
     expect(grader.final_grade).to eq 5
     expect(grader.passing?).to eq false
   end
+
+  it 'should raise error when subject name is less than 1 character' do
+    expect { described_class.new('', '1000', 'NicoPaez', 30, false, false, :finals) }
+      .to raise_error(InvalidSubjectNameError)
+  end
 end
