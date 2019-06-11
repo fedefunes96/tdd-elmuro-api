@@ -107,6 +107,7 @@ describe 'Estado alumno' do
       post_with_body('/calificar', codigo_materia: subject2.code, notas: '[10, 8]', username_alumno: student1.username)
       get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject2.code)
       expect(JSON.parse(last_response.body)['estado']).to eq('APROBADO')
+      expect(JSON.parse(last_response.body)['nota_final']).to eq(9)
     end
   end
 end
