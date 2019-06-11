@@ -18,9 +18,11 @@ describe Subject do
     it 'should respond to teacher' do
       expect(subj.teacher).to eq('NicoPaez')
     end
+
     it 'should respond to laboratory' do
       expect(subj.laboratory).to eq(false)
     end
+
     it 'should respond to projector' do
       expect(subj.projector).to eq(false)
     end
@@ -106,5 +108,10 @@ describe Subject do
   it 'should raise error when subject name is less than 1 character' do
     expect { described_class.new('', '1000', 'NicoPaez', 30, false, false, :finals) }
       .to raise_error(InvalidSubjectNameError)
+  end
+
+  it 'should not allow not having a code' do
+    expect { described_class.new('memo2', '', 'NicoPaez', 30, false, false, :finals) }
+      .to raise_error(InvalidSubjectCodeError)
   end
 end

@@ -77,4 +77,11 @@ describe 'Alta materias' do
     expect(last_response.status).to eq 400
     expect(last_response.body).to include('NOMBRE_ERRONEO')
   end
+
+  it 'responds with CODIGO_ERRONEO if subject code is less than 1 character' do
+    post_with_body('/materias', codigo: '', nombreMateria: 'memo2', docente: 'Nico Paez', cupo: 40,
+                                modalidad: 'parciales', proyector: true)
+    expect(last_response.status).to eq 400
+    expect(last_response.body).to include('CODIGO_ERRONEO')
+  end
 end
