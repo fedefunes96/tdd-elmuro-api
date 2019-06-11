@@ -114,4 +114,12 @@ describe 'Grades endpoint' do
     expect(last_response.body).to include('notas_creadas')
     expect(last_response.status).to eq 200
   end
+
+  it 'returns 400 if a grade is above 10 for midterm subject' do
+    InscriptionRepository.new.save(inscription2)
+    post_with_body('/calificar', codigo_materia: '2020', notas: '[20, 8]',
+                                 username_alumno: 'juanperez')
+    expect(last_response.body).to include('NOTA_INVALIDA')
+    expect(last_response.status).to eq 400
+  end
 end
