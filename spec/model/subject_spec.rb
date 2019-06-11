@@ -18,9 +18,11 @@ describe Subject do
     it 'should respond to teacher' do
       expect(subj.teacher).to eq('NicoPaez')
     end
+
     it 'should respond to laboratory' do
       expect(subj.laboratory).to eq(false)
     end
+
     it 'should respond to projector' do
       expect(subj.projector).to eq(false)
     end
@@ -94,5 +96,10 @@ describe Subject do
     grader = subject.get_grader([9, 1])
     expect(grader.final_grade).to eq 5
     expect(grader.passing?).to eq false
+  end
+
+  it 'should not allow not having a code' do
+    expect { described_class.new('memo2', '', 'NicoPaez', 30, false, false, :finals) }
+      .to raise_error(InvalidSubjectCodeError)
   end
 end
