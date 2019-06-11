@@ -15,9 +15,18 @@ describe 'Estado alumno' do
     SubjectRepository.new.save(subject1)
     subject1
   end
+  let(:subject2) do
+    subject2 = Subject.new('Memo2', '2020', 'NicoPaez', 15, true, false, :midterms)
+    SubjectRepository.new.save(subject2)
+    subject2
+  end
   let(:inscription) do
     inscription = Inscription.new(student1, subject1)
     inscription
+  end
+  let(:inscription2) do
+    inscription2 = Inscription.new(student1, subject2)
+    inscription2
   end
 
   def app
@@ -64,6 +73,7 @@ describe 'Estado alumno' do
   context 'when Student graded in a subject' do
     before(:each) do
       InscriptionRepository.new.save(inscription)
+      InscriptionRepository.new.save(inscription2)
     end
 
     it 'responds ok if user is inscripted to the subject and approved' do
@@ -91,6 +101,20 @@ describe 'Estado alumno' do
 
       get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject1.code)
       expect(JSON.parse(last_response.body)['nota_final']).to eq(10)
+    end
+
+    it 'responds approved when final grade is above 6' do
+      post_with_body('/calificar', codigo_materia: subject2.code, notas: '[10, 8]', username_alumno: student1.username)
+      get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject2.code)
+      expect(JSON.parse(last_response.body)['estado']).to eq('APROBADO')
+      expect(JSON.parse(last_response.body)['nota_final']).to eq(9)
+    end
+
+    it 'responds disapproved if final grade is less than 6' do
+      post_with_body('/calificar', codigo_materia: subject2.code, notas: '[2, 4]', username_alumno: student1.username)
+      get_with_token('/materias/estado', usernameAlumno: student1.username, codigoMateria: subject2.code)
+      expect(JSON.parse(last_response.body)['estado']).to eq('DESAPROBADO')
+      expect(JSON.parse(last_response.body)['nota_final']).to eq(3)
     end
   end
 end

@@ -4,6 +4,7 @@ require_relative '../exceptions/invalid_max_students_error'
 require_relative '../exceptions/invalid_subject_name_error'
 require_relative '../model/graders/finals_grader'
 require_relative '../model/graders/assignments_grader'
+require_relative '../model/graders/midterms_grader'
 
 class Subject
   MAX_STUDENTS_LIMIT = 300
@@ -18,7 +19,8 @@ class Subject
 
   GRADERS = {
     finals: FinalsGrader,
-    assignments: AssignmentsGrader
+    assignments: AssignmentsGrader,
+    midterms: MidtermsGrader
   }.freeze
 
   attr_accessor :name, :code, :max_students, :teacher, :projector, :laboratory, :type
