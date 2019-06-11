@@ -95,4 +95,11 @@ describe Subject do
     expect(grader.final_grade).to eq 5
     expect(grader.passing?).to eq false
   end
+
+  it 'grader for midterms subject is a MidtermGrader' do
+    subject = described_class.new('memo2', '1000', 'NicoPaez', 30, false, false, :midterms)
+    grader = subject.get_grader([9, 1])
+    expect(grader.final_grade).to eq 5
+    expect(grader.passing?).to eq false
+  end
 end

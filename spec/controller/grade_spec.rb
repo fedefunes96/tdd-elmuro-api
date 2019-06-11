@@ -19,6 +19,15 @@ describe 'Grades endpoint' do
     inscription = Inscription.new(student1, subject1)
     inscription
   end
+  let(:subject2) do
+    subject2 = Subject.new('Memo2', '2020', 'NicoPaez', 15, true, false, :midterms)
+    SubjectRepository.new.save(subject2)
+    subject2
+  end
+  let(:inscription2) do
+    inscription2 = Inscription.new(student1, subject2)
+    inscription2
+  end
 
   def app
     Sinatra::Application
@@ -96,5 +105,13 @@ describe 'Grades endpoint' do
                                  username_alumno: 'juanperez')
     expect(last_response.status).to eq 400
     expect(last_response.body).to include('NOTA_INVALIDA')
+  end
+
+  it 'returns 200 if grades are ok for midterm subject' do
+    InscriptionRepository.new.save(inscription2)
+    post_with_body('/calificar', codigo_materia: '2020', notas: '[10, 8]',
+                                 username_alumno: 'juanperez')
+    expect(last_response.body).to include('notas_creadas')
+    expect(last_response.status).to eq 200
   end
 end
