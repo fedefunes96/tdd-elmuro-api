@@ -56,7 +56,11 @@ class Subject
   end
 
   def validate_code(code)
-    raise InvalidSubjectCodeError if code.length > MAX_CODE_LENGTH || code.length < MIN_CODE_LENGTH
+    raise InvalidSubjectCodeError unless valid_code?(code)
+  end
+
+  def valid_code?(code)
+    code.length.between?(MIN_CODE_LENGTH, MAX_CODE_LENGTH)
   end
 
   def validate_max_students(max_students)
