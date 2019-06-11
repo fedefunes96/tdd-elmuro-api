@@ -9,6 +9,7 @@ require_relative '../model/graders/midterms_grader'
 class Subject
   MAX_STUDENTS_LIMIT = 300
   MAX_CODE_LENGTH = 4
+  MIN_NAME_LENGTH = 1
   MAX_NAME_LENGTH = 50
 
   SUBJECT_TYPES = %i[
@@ -72,7 +73,11 @@ class Subject
   end
 
   def validate_name(name)
-    raise(InvalidSubjectNameError) if name.length > MAX_NAME_LENGTH
+    raise(InvalidSubjectNameError) unless valid_name?(name)
+  end
+
+  def valid_name?(name)
+    name.length.between?(MIN_NAME_LENGTH, MAX_NAME_LENGTH)
   end
 
   def validate_type(type)
