@@ -6,4 +6,8 @@ describe MidtermsGrader do
   it 'should raise error when the numer of grades is not 2' do
     expect { described_class.new([7, 10, 8]) }.to raise_error(InvalidGradeError)
   end
+
+  it 'should return mean of grades as final grade' do
+    expect(described_class.new([10, 8]).final_grade).to eq 9
+  end
 end
