@@ -81,6 +81,12 @@ describe 'Alta materias' do
     expect(offers.at(1)['modalidad']).to eq 'parciales'
   end
 
+  it 'should response with modalidad tareas if there is 1 subject of that type' do
+    SubjectRepository.new.save(Subject.new('Tdd', '7595', 'Nico', 10, true, false, :assignments))
+    offers = response_offer
+    expect(offers.at(1)['modalidad']).to eq 'tareas'
+  end
+
   def response_offer
     get_with_token('/materias', usernameAlumno: 'juanperez')
     JSON.parse(last_response.body)['oferta']

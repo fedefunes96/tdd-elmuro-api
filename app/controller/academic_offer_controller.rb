@@ -7,7 +7,8 @@ require_relative '../../app/model/inscription_system'
 class AcademicOfferController
   SUBJECT_TYPES = {
     finals: 'coloquio',
-    midterms: 'parciales'
+    midterms: 'parciales',
+    assignments: 'tareas'
   }.freeze
 
   USERNAME = 'usernameAlumno'.freeze
