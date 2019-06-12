@@ -8,6 +8,7 @@ require_relative '../model/graders/midterms_grader'
 
 class Subject
   MAX_STUDENTS_LIMIT = 300
+  MIN_STUDENTS_LIMIT = 0
   MIN_CODE_LENGTH = 1
   MAX_CODE_LENGTH = 4
   MIN_NAME_LENGTH = 1
@@ -67,7 +68,7 @@ class Subject
   end
 
   def validate_max_students(max_students)
-    raise InvalidMaxStudentsError if max_students <= 0
+    raise InvalidMaxStudentsError if max_students <= MIN_STUDENTS_LIMIT
 
     raise StudentLimitError if max_students > MAX_STUDENTS_LIMIT
   end
