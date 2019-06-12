@@ -67,7 +67,7 @@ class Subject
   end
 
   def validate_max_students(max_students)
-    raise InvalidMaxStudentsError if max_students.negative?
+    raise InvalidMaxStudentsError if max_students <= 0
 
     raise StudentLimitError if max_students > MAX_STUDENTS_LIMIT
   end

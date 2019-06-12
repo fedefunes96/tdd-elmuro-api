@@ -12,6 +12,12 @@ describe Subject do
     end.to raise_error(StudentLimitError)
   end
 
+  it 'should raise error if students quota is 0' do
+    expect do
+      described_class.new('memo2', '9521', 'NicoPaez', 0, true, false, :midterms)
+    end.to raise_error(InvalidMaxStudentsError)
+  end
+
   describe 'attributes' do
     let(:subj) { described_class.new('memo2', '9521', 'NicoPaez', 30, false, false, :midterms) }
 
