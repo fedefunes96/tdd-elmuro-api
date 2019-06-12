@@ -12,6 +12,7 @@ class GradesController
   SUCCESS_MESSAGE = 'notas_creadas'.freeze
   PARAMETER_MISSING = 'parametro_faltante'.freeze
   INVALID_CODE = 'codigo_invalido'.freeze
+  INEXISTENT_INSCRIPTION = 'ALUMNO_INCORRECTO'.freeze
   GRADE_ERROR = 'NOTA_INVALIDA'.freeze
 
   def initialize
@@ -31,7 +32,7 @@ class GradesController
   def update_grades(body)
     inscription = @inscription_repository
                   .find_by_student_and_code(body[PARAMS[:username]], body[PARAMS[:code]])
-    return api_response(INVALID_CODE, StatusCode::BAD_REQUEST) if inscription.nil?
+    return api_response(INEXISTENT_INSCRIPTION, StatusCode::BAD_REQUEST) if inscription.nil?
 
     begin
       grades = parse_grades(body[PARAMS[:grades]])

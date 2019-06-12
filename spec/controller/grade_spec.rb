@@ -138,4 +138,11 @@ describe 'Grades endpoint' do
     expect(last_response.body).to include('NOTA_INVALIDA')
     expect(last_response.status).to eq 400
   end
+
+  it 'returns 400 if student is not enrolled in subject' do
+    post_with_body('/calificar', codigo_materia: '2020', notas: '[10,4]',
+                                 username_alumno: 'juanperez')
+    expect(last_response.status).to eq 400
+    expect(JSON.parse(last_response.body)['error']).to eq 'ALUMNO_INCORRECTO'
+  end
 end
