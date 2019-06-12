@@ -2,13 +2,14 @@ require_relative '../exceptions/student_limit_error'
 require_relative '../exceptions/invalid_subject_settings_error'
 require_relative '../exceptions/invalid_max_students_error'
 require_relative '../exceptions/invalid_subject_name_error'
+require_relative '../exceptions/invalid_quota_error'
 require_relative '../model/graders/finals_grader'
 require_relative '../model/graders/assignments_grader'
 require_relative '../model/graders/midterms_grader'
 
 class Subject
   MAX_STUDENTS_LIMIT = 300
-  MIN_STUDENTS_LIMIT = 1
+  ZERO_STUDENTS_QUOTA = 0
   MIN_CODE_LENGTH = 1
   MAX_CODE_LENGTH = 4
   MIN_NAME_LENGTH = 1
@@ -68,7 +69,11 @@ class Subject
   end
 
   def validate_max_students(max_students)
-    raise StudentLimitError unless max_students.between?(MIN_STUDENTS_LIMIT, MAX_STUDENTS_LIMIT)
+    raise InvalidMaxStudentsError if max_students > MAX_STUDENTS_LIMIT
+
+    raise InvalidQuotaError if max_students == ZERO_STUDENTS_QUOTA
+
+    raise StudentLimitError if max_students.negative?
   end
 
   def validate_settings(projector, laboratory)
