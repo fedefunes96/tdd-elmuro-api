@@ -5,7 +5,11 @@ require_relative '../../app/model/academic_offer'
 require_relative '../../app/model/inscription_system'
 
 class AcademicOfferController
-  MODALIDAD_PARCIALES = 'parciales'.freeze
+  SUBJECT_TYPES = {
+    finals: 'coloquio',
+    midterms: 'parciales'
+  }.freeze
+
   USERNAME = 'usernameAlumno'.freeze
 
   def initialize
@@ -34,7 +38,7 @@ class AcademicOfferController
       nombre: subject.name,
       docente: subject.teacher,
       cupo: @inscription_system.remaining_slots(subject),
-      modalidad: MODALIDAD_PARCIALES
+      modalidad: SUBJECT_TYPES[subject.type]
     }
   end
 end

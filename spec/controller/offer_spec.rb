@@ -70,9 +70,15 @@ describe 'Alta materias' do
     expect(subjects.size).to eq 1
   end
 
-  it 'should response with modalidad parciales if there is 1 subject of that type' do
+  it 'should response with modalidad coloquio if there is 1 subject of that type' do
     offers = response_offer
-    expect(offers.first['modalidad']).to eq 'parciales'
+    expect(offers.first['modalidad']).to eq 'coloquio'
+  end
+
+  it 'should response with modalidad parciales if there is 1 subject of that type' do
+    SubjectRepository.new.save(Subject.new('Tdd', '7595', 'NicoPaez', 10, true, false, :midterms))
+    offers = response_offer
+    expect(offers.at(1)['modalidad']).to eq 'parciales'
   end
 
   def response_offer
