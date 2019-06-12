@@ -32,7 +32,8 @@ class AcademicOfferController
       codigo: subject.code,
       nombre: subject.name,
       docente: subject.teacher,
-      cupo: @inscription_system.remaining_slots(subject)
+      cupo: @inscription_system.remaining_slots(subject),
+      modalidad: 'parciales'
     }
   end
 end
