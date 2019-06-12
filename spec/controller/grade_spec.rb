@@ -130,4 +130,12 @@ describe 'Grades endpoint' do
     expect(last_response.body).to include('NOTA_INVALIDA')
     expect(last_response.status).to eq 400
   end
+
+  it 'returns 400 if grades field is empty' do
+    InscriptionRepository.new.save(inscription2)
+    post_with_body('/calificar', codigo_materia: '2020', notas: '',
+                                 username_alumno: 'juanperez')
+    expect(last_response.body).to include('NOTA_INVALIDA')
+    expect(last_response.status).to eq 400
+  end
 end

@@ -22,4 +22,8 @@ describe MidtermsGrader do
   it 'should be passing if final grade is above 6' do
     expect(described_class.new([8, 7]).passing?).to eq true
   end
+
+  it 'shold raise error if grade is empty' do
+    expect { described_class.new([]) }.to raise_error(InvalidGradeError)
+  end
 end
