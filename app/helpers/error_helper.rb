@@ -13,9 +13,9 @@ class ErrorHelper
   ERRORS = {
     NoAvailableQuotaError => 'CUPO_COMPLETO',
     DuplicateInscriptionError => 'INSCRIPCION_DUPLICADA',
-    StudentLimitError => 'cupo_excedido',
-    InvalidSubjectSettingsError => 'pedidos_incompatibles',
-    InvalidMaxStudentsError => 'pedidos_incompatibles',
+    StudentLimitError => 'CUPO_EXCEDIDO',
+    InvalidSubjectSettingsError => 'PEDIDOS_INCOMPATIBLES',
+    InvalidMaxStudentsError => 'PEDIDOS_INCOMPATIBLES',
     InvalidSubjectCodeError => 'CODIGO_ERRONEO',
     InvalidSubjectNameError => 'NOMBRE_ERRONEO',
     InvalidSubjectTypeError => 'MODALIDAD_ERRONEA',

@@ -15,9 +15,9 @@ class InscriptionController
     username: 'username_alumno'
   }.freeze
 
-  SUCCESS_MESSAGE = 'inscripcion_creada'.freeze
-  PARAMETER_MISSING = 'parametro_faltante'.freeze
-  SUBJECT_MISSING = 'materia_faltante'.freeze
+  SUCCESS_MESSAGE = 'INSCRIPCION_CREADA'.freeze
+  PARAMETER_MISSING = 'PARAMETRO_FALTANTE'.freeze
+  SUBJECT_MISSING = 'MATERIA_FALTANTE'.freeze
 
   def create(body)
     unless ParameterHelper.new(PARAMS).all_params?(body)
