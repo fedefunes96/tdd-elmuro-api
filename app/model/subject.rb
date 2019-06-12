@@ -69,11 +69,9 @@ class Subject
   end
 
   def validate_max_students(max_students)
-    raise InvalidMaxStudentsError if max_students > MAX_STUDENTS_LIMIT
-
     raise InvalidQuotaError if max_students == ZERO_STUDENTS_QUOTA
 
-    raise StudentLimitError if max_students.negative?
+    raise StudentLimitError unless max_students.between?(ZERO_STUDENTS_QUOTA, MAX_STUDENTS_LIMIT)
   end
 
   def validate_settings(projector, laboratory)

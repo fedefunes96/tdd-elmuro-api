@@ -10,7 +10,7 @@ describe Subject do
   it 'max students has to be at most 300' do
     expect do
       described_class.new('memo2', '9521', 'nicopaez', 500, true, false, :finals)
-    end.to raise_error(InvalidMaxStudentsError)
+    end.to raise_error(StudentLimitError)
   end
 
   it 'should raise error if students quota is 0' do
