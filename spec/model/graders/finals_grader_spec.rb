@@ -35,4 +35,8 @@ describe FinalsGrader do
   it 'passing is false if grade is below 4' do
     expect(described_class.new([2]).passing?).to eq false
   end
+
+  it 'shold raise error if grade is empty' do
+    expect { described_class.new([]) }.to raise_error(InvalidGradeError)
+  end
 end

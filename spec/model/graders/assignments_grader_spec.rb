@@ -1,6 +1,7 @@
 require 'rspec'
 
 require_relative '../../../app/model/graders/assignments_grader'
+require_relative '../../../app/exceptions/invalid_grade_error'
 
 describe AssignmentsGrader do
   it 'one grade above 6 is considered a pass' do
@@ -37,5 +38,9 @@ describe AssignmentsGrader do
 
   it 'if more than 2 failing grades, final grade is 1' do
     expect(described_class.new([10, 1, 1, 3, 10, 10]).final_grade).to eq 1
+  end
+
+  it 'shold raise error if grade is empty' do
+    expect { described_class.new([]) }.to raise_error(InvalidGradeError)
   end
 end
