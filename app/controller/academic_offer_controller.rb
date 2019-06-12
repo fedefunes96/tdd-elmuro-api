@@ -5,6 +5,7 @@ require_relative '../../app/model/academic_offer'
 require_relative '../../app/model/inscription_system'
 
 class AcademicOfferController
+  MODALIDAD_PARCIALES = 'parciales'.freeze
   USERNAME = 'usernameAlumno'.freeze
 
   def initialize
@@ -33,7 +34,7 @@ class AcademicOfferController
       nombre: subject.name,
       docente: subject.teacher,
       cupo: @inscription_system.remaining_slots(subject),
-      modalidad: 'parciales'
+      modalidad: MODALIDAD_PARCIALES
     }
   end
 end
