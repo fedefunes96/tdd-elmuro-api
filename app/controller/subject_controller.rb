@@ -18,9 +18,9 @@ class SubjectController
 
   PROJECTOR = 'proyector'.freeze
   LABORATORY = 'laboratorio'.freeze
-  SUCCESS_MESSAGE = 'materia_creada'.freeze
+  SUCCESS_MESSAGE = 'MATERIA_CREADA'.freeze
   CODE_NOT_UNIQUE = 'MATERIA_DUPLICADA'.freeze
-  PARAMETER_MISSING = 'parametro_faltante'.freeze
+  PARAMETER_MISSING = 'PARAMETRO_FALTANTE'.freeze
 
   def create(body)
     unless ParameterHelper.new(PARAMS).all_params?(body)
