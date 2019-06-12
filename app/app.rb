@@ -9,11 +9,12 @@ require_relative '../repositories/student_repository'
 require_relative '../repositories/inscription_repository'
 require_relative '../repositories/subject_repository'
 require_relative '../config/token'
+require_relative 'helpers/token_error_response'
 
 before do
   token = request.get_header('HTTP_API_TOKEN')
   path = request.path
-  halt 401 if token != TOKEN && path != '/reset'
+  halt token_error_response if token != TOKEN && path != '/reset'
 end
 
 post '/materias' do

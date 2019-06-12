@@ -20,4 +20,10 @@ describe 'API Token' do
     post('/any_endpoint')
     expect(last_response.status).not_to eq 401
   end
+
+  it 'returns error message when token is invalid' do
+    header 'Api-Token', 'wrong_token'
+    post('/any_endpoint')
+    expect(last_response.body['error'].nil?).to eq false
+  end
 end
