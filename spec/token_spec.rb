@@ -26,4 +26,9 @@ describe 'API Token' do
     post('/any_endpoint')
     expect(last_response.body['error'].nil?).to eq false
   end
+
+  it 'returns error message when token is not supplied' do
+    post('/any_endpoint')
+    expect(last_response.body['error'].nil?).to eq false
+  end
 end
