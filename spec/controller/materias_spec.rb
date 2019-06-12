@@ -84,4 +84,10 @@ describe 'Alta materias' do
     expect(last_response.status).to eq 400
     expect(last_response.body).to include('CODIGO_ERRONEO')
   end
+
+  it 'responds with 400 if subject max students is 0' do
+    post_with_body('/materias', codigo: '', nombreMateria: 'memo2', docente: 'Nico Paez', cupo: 0,
+                                modalidad: 'parciales', proyector: true)
+    expect(last_response.status).to eq 400
+  end
 end
