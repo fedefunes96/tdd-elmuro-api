@@ -7,6 +7,7 @@ require_relative '../exceptions/no_message_found_error'
 require_relative '../exceptions/invalid_subject_code_error'
 require_relative '../exceptions/invalid_subject_name_error'
 require_relative '../exceptions/invalid_subject_type_error'
+require_relative '../exceptions/invalid_quota_error'
 
 class ErrorHelper
   ERRORS = {
@@ -17,7 +18,8 @@ class ErrorHelper
     InvalidMaxStudentsError => 'pedidos_incompatibles',
     InvalidSubjectCodeError => 'CODIGO_ERRONEO',
     InvalidSubjectNameError => 'NOMBRE_ERRONEO',
-    InvalidSubjectTypeError => 'MODALIDAD_ERRONEA'
+    InvalidSubjectTypeError => 'MODALIDAD_ERRONEA',
+    InvalidQuotaError => 'CUPO_ERRONEO'
   }.freeze
 
   def message(exception)

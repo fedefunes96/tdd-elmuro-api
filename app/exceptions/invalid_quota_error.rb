@@ -1,0 +1,2 @@
+class InvalidQuotaError < GuaraniError
+end

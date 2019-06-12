@@ -4,12 +4,19 @@ require_relative '../../app/exceptions/invalid_max_students_error'
 require_relative '../../app/exceptions/invalid_subject_code_error'
 require_relative '../../app/exceptions/invalid_subject_name_error'
 require_relative '../../app/exceptions/invalid_subject_type_error'
+require_relative '../../app/exceptions/invalid_quota_error'
 
 describe Subject do
   it 'max students has to be at most 300' do
     expect do
       described_class.new('memo2', '9521', 'nicopaez', 500, true, false, :finals)
     end.to raise_error(StudentLimitError)
+  end
+
+  it 'should raise error if students quota is 0' do
+    expect do
+      described_class.new('memo2', '9521', 'NicoPaez', 0, true, false, :midterms)
+    end.to raise_error(InvalidQuotaError)
   end
 
   describe 'attributes' do
@@ -41,7 +48,7 @@ describe Subject do
   it 'can not have negative max students' do
     expect do
       described_class.new('memo2', '9521', 'NicoPaez', -30, false, false, :finals)
-    end.to raise_error(InvalidMaxStudentsError)
+    end.to raise_error(StudentLimitError)
   end
 
   it 'subject code can not be over 4 characters long' do
