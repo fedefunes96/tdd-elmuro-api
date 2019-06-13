@@ -17,7 +17,7 @@ class InscriptionController
 
   SUCCESS_MESSAGE = 'INSCRIPCION_CREADA'.freeze
   PARAMETER_MISSING = 'PARAMETRO_FALTANTE'.freeze
-  SUBJECT_MISSING = 'MATERIA_FALTANTE'.freeze
+  SUBJECT_MISSING = 'MATERIA_NO_EXISTE'.freeze
 
   def create(body)
     unless ParameterHelper.new(PARAMS).all_params?(body)
