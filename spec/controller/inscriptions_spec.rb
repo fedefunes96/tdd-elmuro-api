@@ -43,6 +43,15 @@ describe 'Inscripcion alumnos' do
     expect(last_response.status).to eq 400
   end
 
+  it 'responds with MATERIA_NO_EXISTE if subject does not exist' do
+    post_with_body('/alumnos', nombre_completo: 'Juan Perez',
+                               username_alumno: 'juanperez', codigo_materia: '1000')
+
+    subject_response = JSON.parse(last_response.body)
+
+    expect(subject_response['error']).to eq 'MATERIA_NO_EXISTE'
+  end
+
   it 'responds with error if twice inscription' do
     post_with_body('/alumnos', nombre_completo: 'Juan Perez',
                                username_alumno: 'juanperez', codigo_materia: '7592')
